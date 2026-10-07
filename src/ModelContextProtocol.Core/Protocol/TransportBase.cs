@@ -180,7 +180,7 @@ public abstract partial class TransportBase : ITransport
     {
         if (_logger.IsEnabled(LogLevel.Trace))
         {
-            LogTransportSendingMessageSensitive(Name, JsonSerializer.Serialize(message, McpJsonUtilities.JsonContext.Default.JsonRpcMessage));
+            LogTransportSendingMessageSensitive(Name, message.ToDiagnosticString());
         }
     }
 

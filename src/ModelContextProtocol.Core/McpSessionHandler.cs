@@ -325,7 +325,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
                         {
                             if (_logger.IsEnabled(LogLevel.Trace))
                             {
-                                LogMessageHandlerExceptionSensitive(EndpointName, message.GetType().Name, JsonSerializer.Serialize(message, McpJsonUtilities.JsonContext.Default.JsonRpcMessage), ex);
+                                LogMessageHandlerExceptionSensitive(EndpointName, message.GetType().Name, message.ToDiagnosticString(), ex);
                             }
                             else
                             {
@@ -806,7 +806,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
             {
                 if (_logger.IsEnabled(LogLevel.Trace))
                 {
-                    LogSendingRequestSensitive(EndpointName, request.Method, JsonSerializer.Serialize(msg, McpJsonUtilities.JsonContext.Default.JsonRpcMessage));
+                    LogSendingRequestSensitive(EndpointName, request.Method, msg.ToDiagnosticString());
                 }
                 else
                 {
@@ -817,7 +817,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
             {
                 if (_logger.IsEnabled(LogLevel.Trace))
                 {
-                    LogSendingMessageSensitive(EndpointName, JsonSerializer.Serialize(msg, McpJsonUtilities.JsonContext.Default.JsonRpcMessage));
+                    LogSendingMessageSensitive(EndpointName, msg.ToDiagnosticString());
                 }
                 else
                 {
@@ -973,6 +973,13 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
 
     private static void AddResponseTags(ref TagList tags, Activity? activity, JsonRpcResponse? response, string method)
     {
+        if (response is { HasStreamingText: true, HasError: true })
+        {
+            // Diagnostics must not open a streaming source independently of its transport.
+            activity?.SetStatus(ActivityStatusCode.Error, "Streaming tool error content omitted.");
+            tags.Add("error.type", method == RequestMethods.ToolsCall ? "tool_error" : "_OTHER");
+            return;
+        }
         if (response?.HasError == true && response.Result is JsonObject jsonObject
             && jsonObject.TryGetPropertyValue("isError", out var isError)
             && isError?.GetValueKind() == JsonValueKind.True)

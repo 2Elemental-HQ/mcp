@@ -371,9 +371,19 @@ internal sealed partial class McpServerImpl : McpServer
             {
                 // Metadata must not force serialization of a deferred tool-content source.
                 JsonObject? meta = null;
-                if (response.TypedResult is Result typed)
+                if (response.TypedResult is CallToolResult typed)
                 {
-                    meta = typed.Meta ??= new JsonObject();
+                    // Applications may reuse a result across concurrent calls. Keep SDK metadata
+                    // response-owned, as it was when each response had its own materialized node.
+                    meta = typed.Meta?.DeepClone().AsObject() ?? new JsonObject();
+                    response.ReplaceTypedToolResult(new CallToolResult
+                    {
+                        Content = typed.Content,
+                        StructuredContent = typed.StructuredContent,
+                        IsError = typed.IsError,
+                        ResultType = typed.ResultType,
+                        Meta = meta,
+                    });
                 }
                 else if (response.Result is JsonObject result)
                 {

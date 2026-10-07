@@ -1,6 +1,7 @@
 #if NET10_0_OR_GREATER
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using ModelContextProtocol.AspNetCore.Tests.Utils;
 using ModelContextProtocol.Client;
 using ModelContextProtocol.Protocol;
@@ -25,6 +26,7 @@ public sealed class StreamingTextContentTests(ITestOutputHelper output) : Kestre
     [InlineData(100000)]
     public async Task SegmentedTextPreservesCompleteResult(int segmentLength)
     {
+        Builder.Logging.SetMinimumLevel(LogLevel.Trace);
         var text = string.Concat(new string('"', 20000), "😀é\r\n<>&\\\ud800x\udc00");
         int opened = 0;
         int disposed = 0;
@@ -44,14 +46,15 @@ public sealed class StreamingTextContentTests(ITestOutputHelper output) : Kestre
         }
         var source = new StreamingTextContentBlock(Read) { Meta = new JsonObject { ["source"] = "synthetic" } };
         Assert.Equal(0, opened);
+        var sharedResult = new CallToolResult
+        {
+            Content = [new TextContentBlock { Text = "before" }, source, new TextContentBlock { Text = "after" }],
+            IsError = false,
+            StructuredContent = JsonSerializer.SerializeToElement(new { complete = true }),
+            Meta = new JsonObject { ["result"] = "preserved" },
+        };
         Builder.Services.AddMcpServer().WithHttpTransport(o => o.Stateless = true)
-            .WithTools([McpServerTool.Create(() => new CallToolResult
-            {
-                Content = [new TextContentBlock { Text = "before" }, source, new TextContentBlock { Text = "after" }],
-                IsError = false,
-                StructuredContent = JsonSerializer.SerializeToElement(new { complete = true }),
-                Meta = new JsonObject { ["result"] = "preserved" },
-            }, new() { Name = "stream" })]);
+            .WithTools([McpServerTool.Create(() => sharedResult, new() { Name = "stream" })]);
         await using var app = Builder.Build();
         app.MapMcp();
         await app.StartAsync(TestContext.Current.CancellationToken);
@@ -71,6 +74,7 @@ public sealed class StreamingTextContentTests(ITestOutputHelper output) : Kestre
             Assert.True(result.StructuredContent!.Value.GetProperty("complete").GetBoolean());
             Assert.Equal("preserved", result.Meta!["result"]!.GetValue<string>());
         }
+        Assert.Single(sharedResult.Meta!);
         Assert.Equal(3, opened);
         Assert.Equal(opened, disposed);
     }

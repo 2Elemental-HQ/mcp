@@ -9,6 +9,7 @@ namespace ModelContextProtocol.Protocol;
 /// enumeration. A segment remains valid until the next MoveNextAsync call. The source must observe
 /// cancellation and release its resources when enumeration ends. HTTP/SSE serialization awaits
 /// transport backpressure before requesting more data. Clients receive a normal TextContentBlock.
+/// Trace logging and error diagnostics omit streaming text instead of opening its source.
 /// Explicit synchronous serialization or access to JsonRpcResponse.Result may materialize the result.
 /// </remarks>
 public sealed class StreamingTextContentBlock : ContentBlock

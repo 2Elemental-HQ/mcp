@@ -82,7 +82,23 @@ public sealed class JsonRpcResponse : JsonRpcMessageWithId
         _write = writer => writer.WriteRawValue(result),
     };
 
+    internal void ReplaceTypedToolResult(CallToolResult result)
+    {
+        _result = null;
+        _utf8Result = null;
+        _typedResult = result;
+        _materialize = () => JsonSerializer.SerializeToNode(result, McpJsonUtilities.JsonContext.Default.CallToolResult);
+        _write = writer => JsonSerializer.Serialize(writer, result, McpJsonUtilities.JsonContext.Default.CallToolResult);
+    }
+
     internal object? TypedResult => _typedResult;
+
+    internal bool HasStreamingText =>
+#if NET10_0_OR_GREATER
+        _typedResult is CallToolResult result && result.Content.Any(block => block is StreamingTextContentBlock);
+#else
+        false;
+#endif
 
     internal bool HasResult => _materialize is not null || _result is not null;
 

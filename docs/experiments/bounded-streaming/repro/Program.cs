@@ -30,6 +30,7 @@ if (mode == "server")
 {
     var builder = WebApplication.CreateBuilder();
     builder.Logging.ClearProviders();
+    builder.Logging.AddConsole().SetMinimumLevel(LogLevel.Warning);
     builder.WebHost.UseUrls("http://0.0.0.0:8080");
     builder.Services.AddMcpServer().WithHttpTransport(o => o.Stateless = true)
         .WithTools([McpServerTool.Create(async (CancellationToken token) =>
@@ -99,5 +100,5 @@ static object Snapshot()
 {
     using var process = Process.GetCurrentProcess();
     var info = GC.GetGCMemoryInfo();
-    return new { allocated = GC.GetTotalAllocatedBytes(false), occupied = GC.GetTotalMemory(false), heapAfterLastGc = info.HeapSizeBytes, fragmentedAfterLastGc = info.FragmentedBytes, lohAfterLastGc = info.GenerationInfo.Length > 3 ? info.GenerationInfo[3].SizeAfterBytes : 0, rss = process.WorkingSet64, peakRss = process.PeakWorkingSet64, gen2 = GC.CollectionCount(2) };
+    return new { availableHeap = info.TotalAvailableMemoryBytes, allocated = GC.GetTotalAllocatedBytes(false), occupied = GC.GetTotalMemory(false), heapAfterLastGc = info.HeapSizeBytes, fragmentedAfterLastGc = info.FragmentedBytes, lohAfterLastGc = info.GenerationInfo.Length > 3 ? info.GenerationInfo[3].SizeAfterBytes : 0, rss = process.WorkingSet64, peakRss = process.PeakWorkingSet64, gen2 = GC.CollectionCount(2) };
 }

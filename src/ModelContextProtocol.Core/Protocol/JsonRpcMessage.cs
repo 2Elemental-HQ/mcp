@@ -19,6 +19,10 @@ namespace ModelContextProtocol.Protocol;
 [JsonConverter(typeof(Converter))]
 public abstract class JsonRpcMessage
 {
+    internal string ToDiagnosticString() => this is JsonRpcResponse { HasStreamingText: true } response
+        ? $"Streaming tool response '{response.Id}': content omitted to avoid enumerating the source."
+        : JsonSerializer.Serialize(this, McpJsonUtilities.JsonContext.Default.JsonRpcMessage);
+
     /// <summary>Prevent external derivations.</summary>
     private protected JsonRpcMessage()
     {
