@@ -26,3 +26,5 @@ The first CI attempt [37614257897](https://github.com/2Elemental-HQ/mcp/actions/
 ## Review decision
 
 A temporary exact-source dependency is defensible for the measured .NET 10 HTTP/SSE path after owner review and successful candidate CI. The client still owns complete results. Synchronous serialization, mutable result inspection, persistent event stores, arbitrary custom converters and other transports do not inherit this memory acceptance. Distribution and production adoption need separate owner authorization. The generic upstream proposal remains unsent.
+
+The candidate-source CI is not fully green: Linux/macOS pass, Windows exposes the [additional compatibility findings](known-upstream-boundaries.md). Exact-source adoption must include an explicit decision about those boundaries; the .NET 10 memory result does not waive them.

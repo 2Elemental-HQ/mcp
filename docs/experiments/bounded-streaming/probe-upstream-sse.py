@@ -4,6 +4,7 @@ import argparse, json, os, pathlib, subprocess, sys
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--configuration', default='Release')
+parser.add_argument('--framework', default='net472')
 args = parser.parse_args()
 repo = pathlib.Path(__file__).resolve().parents[3]
 base = '3338e88e15c42cfc27465143c140d7d10f1a2707'
@@ -12,13 +13,16 @@ output.mkdir(parents=True, exist_ok=True)
 checkout = repo / 'artifacts/upstream-sse-checkout'
 subprocess.run(['git', 'clone', '--shared', '--no-checkout', str(repo), str(checkout)], check=True)
 subprocess.run(['git', 'checkout', '--detach', base], cwd=checkout, check=True)
+subprocess.run(['git', 'remote', 'set-url', 'origin', 'https://github.com/modelcontextprotocol/csharp-sdk.git'], cwd=checkout, check=True)
+# Replace the old Docker test class as well as its fixture; the two tests remain regular tests.
+(checkout / 'tests/ModelContextProtocol.Tests/DockerEverythingServerTests.cs').unlink()
 files = ['tests/Common/Utils/NodeHelpers.cs',
          'tests/ModelContextProtocol.Tests/EverythingSseServerFixture.cs',
          'tests/ModelContextProtocol.Tests/EverythingSseServerTests.cs']
 for name in files:
     (checkout / name).write_bytes((repo / name).read_bytes())
 assert not subprocess.check_output(['git', 'diff', '--', 'src'], cwd=checkout)
-command = ['dotnet', 'test', 'tests/ModelContextProtocol.Tests', '-f', 'net472', '-c', args.configuration,
+command = ['dotnet', 'test', 'tests/ModelContextProtocol.Tests', '-f', args.framework, '-c', args.configuration,
            '--filter', 'FullyQualifiedName~EverythingSseServerTests', '--logger', 'trx;LogFileName=upstream-sse.trx',
            '--results-directory', str(output), '--blame-hang-timeout', '3m']
 with (output / 'upstream-sse.log').open('w') as log:
@@ -30,8 +34,11 @@ with (output / 'upstream-sse.log').open('w') as log:
         code = result.returncode
     except subprocess.TimeoutExpired:
         code = 124
-summary = {'upstream': base, 'runtimeChanged': False, 'fixtureFiles': files, 'command': command, 'exitCode': code,
+summary = {'testResultsProduced': (output / 'upstream-sse.trx').exists(), 'upstream': base, 'runtimeChanged': False, 'fixtureFiles': files, 'command': command, 'exitCode': code,
            'purpose': 'Diagnostic comparison only. Candidate full-suite failures remain blocking and are not suppressed.'}
 (output / 'summary.json').write_text(json.dumps(summary, indent=2) + '\n')
 print(json.dumps(summary, indent=2))
 # A baseline failure is evidence, not a waiver for the separate candidate test gate.
+
+if not summary['testResultsProduced']:
+    raise SystemExit('Upstream comparison did not execute tests; inspect the retained build/setup log.')

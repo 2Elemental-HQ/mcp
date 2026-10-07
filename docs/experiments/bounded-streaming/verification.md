@@ -38,3 +38,7 @@ Initially GitHub returned zero workflows and HTTP 404 on dispatch despite enable
 ## Recommendation
 
 The patch is suitable for upstream design review, particularly the deferred typed-result path, bounded escaping and SSE buffering fixes. The new public API deserves separate API/lifetime review. A temporary exact-commit-pinned dependency is defensible only after the owner reviews the patch, verifies the relevant CI matrix and accepts the documented .NET 10/HTTP and client-memory limits. Do not use a floating branch. No package publication, upstream submission or production adoption has been performed.
+
+## Cross-platform follow-up
+
+The original candidate CI passed Linux/macOS Debug and Release but failed Windows; it is not green. See [additional compatibility findings](known-upstream-boundaries.md) for the corrected net472 HTTP mock, bounded legacy SSE diagnostic, exact-upstream comparison recipe and separately reproduced late-discovery protocol race. No new test skip or tolerance increase was used. These findings qualify the adoption recommendation above.

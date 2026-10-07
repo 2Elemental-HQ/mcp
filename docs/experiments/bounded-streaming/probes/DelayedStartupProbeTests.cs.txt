@@ -1,0 +1,28 @@
+using ModelContextProtocol.Client;
+using ModelContextProtocol.Tests.Utils;
+
+namespace ModelContextProtocol.Tests;
+
+/// <summary>
+/// Reproduces discovery fallback when a real stdio child starts after the default probe deadline.
+/// </summary>
+public sealed class DelayedStartupProbeTests(ITestOutputHelper output) : LoggedTest(output)
+{
+    /// <summary>
+    /// A new SDK server must connect both immediately and after a delayed process launch.
+    /// </summary>
+    [Theory]
+    [InlineData(0)]
+    [InlineData(6)]
+    public async Task DelayedServerShouldConnect(int seconds)
+    {
+        var server = Path.Combine(AppContext.BaseDirectory, "TestServer.dll");
+        await using var client = await McpClient.CreateAsync(new StdioClientTransport(new()
+        {
+            Command = "python3",
+            Arguments = ["-c", "import os,sys,time; time.sleep(float(sys.argv[1])); os.execvp('dotnet',['dotnet',sys.argv[2]])", seconds.ToString(), server],
+            Name = "DelayedServer"
+        }), loggerFactory: LoggerFactory, cancellationToken: TestContext.Current.CancellationToken);
+        Assert.NotNull(client.ServerInfo);
+    }
+}
