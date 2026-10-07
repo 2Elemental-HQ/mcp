@@ -37,8 +37,9 @@ for label,ref in REFS.items():
     repo=pathlib.Path(tempfile.mkdtemp(prefix=f'oauth-{label}-'))
     subprocess.run(['git','clone','--no-hardlinks','--no-checkout',str(ROOT),str(repo)],check=True)
     subprocess.run(['git','checkout','--detach',ref],cwd=repo,check=True)
-    # Match the original CI compiler, not the different package production compiler.
-    (repo/'global.json').write_text('{"sdk":{"version":"10.0.401","rollForward":"disable"}}\n')
+    # Preserve the original global.json selection on the same runner image; setup-dotnet's installed
+    # SDK is not necessarily the SDK selected by the repository's roll-forward policy.
+    command(['dotnet','--info'],repo,f'{label}-dotnet-info.log')
     for tfm in ['net9.0','net10.0']:
         if command(['dotnet','build',PROJECT,'-c','Release','-f',tfm],repo,f'{label}-{tfm}-original-build.log'):
             raise SystemExit('Original build failed; inspect evidence')
