@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Text.Json;
+using System.Text;
 using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 
@@ -128,7 +129,7 @@ public abstract class ContentBlock
                         break;
 
                     case "text":
-                        text = reader.GetString();
+                        text = ReadText(ref reader);
                         break;
 
                     case "name":
@@ -298,6 +299,39 @@ public abstract class ContentBlock
             return block;
         }
 
+        // Copy escaped text directly into its final string. GetString otherwise rents an
+        // intermediate UTF-8 array as large as the escaped text, retained by the shared pool.
+        private static string? ReadText(ref Utf8JsonReader reader)
+        {
+#if NET10_0_OR_GREATER
+            if (reader.TokenType == JsonTokenType.String && reader.ValueIsEscaped && !reader.HasValueSequence)
+            {
+                var remaining = reader.ValueSpan;
+                int characters = 0;
+                while (!remaining.IsEmpty)
+                {
+                    int slash = remaining.IndexOf((byte)'\\');
+                    if (slash < 0)
+                    {
+                        characters = checked(characters + Encoding.UTF8.GetCharCount(remaining));
+                        break;
+                    }
+                    characters = checked(characters + Encoding.UTF8.GetCharCount(remaining.Slice(0, slash)) + 1);
+                    remaining = remaining.Slice(slash);
+                    // The JSON reader has validated escape syntax. Each Unicode escape supplies
+                    // one UTF-16 code unit, including each half of a surrogate pair.
+                    remaining = remaining.Slice(remaining[1] == (byte)'u' ? 6 : 2);
+                }
+                return string.Create(characters, reader, static (destination, state) =>
+                {
+                    if (state.CopyString(destination) != destination.Length)
+                        throw new JsonException("Decoded text length did not match its escaped representation.");
+                });
+            }
+#endif
+            return reader.GetString();
+        }
+
         /// <inheritdoc/>
         public override void Write(Utf8JsonWriter writer, ContentBlock value, JsonSerializerOptions options)
         {
@@ -314,7 +348,20 @@ public abstract class ContentBlock
             switch (value)
             {
                 case TextContentBlock textContent:
+                    #if NET10_0_OR_GREATER
+                    writer.WritePropertyName("text");
+                    var remaining = textContent.Text.AsSpan();
+                    do
+                    {
+                        int count = Math.Min(remaining.Length, 4096);
+                        writer.WriteStringValueSegment(remaining.Slice(0, count), count == remaining.Length);
+                        remaining = remaining.Slice(count);
+                        // Flush each segment so stream-backed writers cannot accumulate the entire text.
+                        writer.Flush();
+                    } while (!remaining.IsEmpty);
+#else
                     writer.WriteString("text", textContent.Text);
+#endif
                     break;
 
                 case ImageContentBlock imageContent:

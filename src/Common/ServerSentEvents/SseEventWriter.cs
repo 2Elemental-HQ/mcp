@@ -57,6 +57,41 @@ internal sealed class SseEventWriter : IDisposable
         _bufferWriter.Reset();
     }
 
+    /// <summary>
+    /// Writes a JSON data line without buffering the whole event. The formatter must not emit raw line breaks.
+    /// </summary>
+    internal async ValueTask WriteSingleLineAsync<T>(SseItem<T> item, Func<T, Stream, CancellationToken, Task> formatter, CancellationToken cancellationToken)
+    {
+        _bufferWriter.Reset();
+        if (item.EventType is not null)
+        {
+            _bufferWriter.WriteUtf8String("event: "u8);
+            _bufferWriter.WriteUtf8String(item.EventType);
+            _bufferWriter.WriteUtf8String(s_newLine);
+        }
+        _bufferWriter.WriteUtf8String("data: "u8);
+        await _destination.WriteAsync(_bufferWriter.WrittenMemory, cancellationToken).ConfigureAwait(false);
+        _bufferWriter.Reset();
+        await formatter(item.Data, _destination, cancellationToken).ConfigureAwait(false);
+        _bufferWriter.WriteUtf8String(s_newLine);
+        if (item.EventId is not null)
+        {
+            _bufferWriter.WriteUtf8String("id: "u8);
+            _bufferWriter.WriteUtf8String(item.EventId);
+            _bufferWriter.WriteUtf8String(s_newLine);
+        }
+        if (item.ReconnectionInterval is { } retry)
+        {
+            _bufferWriter.WriteUtf8String("retry: "u8);
+            _bufferWriter.WriteUtf8Number((long)retry.TotalMilliseconds);
+            _bufferWriter.WriteUtf8String(s_newLine);
+        }
+        _bufferWriter.WriteUtf8String(s_newLine);
+        await _destination.WriteAsync(_bufferWriter.WrittenMemory, cancellationToken).ConfigureAwait(false);
+        await _destination.FlushAsync(cancellationToken).ConfigureAwait(false);
+        _bufferWriter.Reset();
+    }
+
     private static void FormatSseEvent(
         IBufferWriter<byte> bufferWriter,
         string? eventType,

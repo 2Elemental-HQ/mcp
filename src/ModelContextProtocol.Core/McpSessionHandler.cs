@@ -447,7 +447,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
         }
     }
 
-    private async Task<JsonNode?> HandleMessageCoreAsync(JsonRpcMessage message, CancellationToken cancellationToken)
+    private async Task<JsonRpcResponse?> HandleMessageCoreAsync(JsonRpcMessage message, CancellationToken cancellationToken)
     {
         switch (message)
         {
@@ -516,7 +516,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
         }
     }
 
-    private async Task<JsonNode?> HandleRequestAsync(JsonRpcRequest request, CancellationToken cancellationToken)
+    private async Task<JsonRpcResponse> HandleRequestAsync(JsonRpcRequest request, CancellationToken cancellationToken)
     {
         if (!_requestHandlers.TryGetValue(request.Method, out var handler))
         {
@@ -524,14 +524,11 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
             throw new McpProtocolException($"Method '{request.Method}' is not available.", McpErrorCode.MethodNotFound);
         }
 
-        JsonNode? result = await handler(request, cancellationToken).ConfigureAwait(false);
+        var result = await handler(request, cancellationToken).ConfigureAwait(false);
 
-        await SendMessageAsync(new JsonRpcResponse
-        {
-            Id = request.Id,
-            Result = result,
-            Context = request.Context,
-        }, cancellationToken).ConfigureAwait(false);
+        result.Id = request.Id;
+        result.Context = request.Context;
+        await SendMessageAsync(result, cancellationToken).ConfigureAwait(false);
 
         return result;
     }
@@ -706,7 +703,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
             {
                 if (addTags)
                 {
-                    AddResponseTags(ref tags, activity, success.Result, method);
+                    AddResponseTags(ref tags, activity, success, method);
                 }
 
                 if (_logger.IsEnabled(LogLevel.Trace))
@@ -974,9 +971,9 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
         }
     }
 
-    private static void AddResponseTags(ref TagList tags, Activity? activity, JsonNode? response, string method)
+    private static void AddResponseTags(ref TagList tags, Activity? activity, JsonRpcResponse? response, string method)
     {
-        if (response is JsonObject jsonObject
+        if (response?.HasError == true && response.Result is JsonObject jsonObject
             && jsonObject.TryGetPropertyValue("isError", out var isError)
             && isError?.GetValueKind() == JsonValueKind.True)
         {

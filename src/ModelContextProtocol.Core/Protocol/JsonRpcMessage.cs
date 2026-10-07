@@ -74,6 +74,25 @@ public abstract class JsonRpcMessage
     {
         /// <inheritdoc/>
         public override JsonRpcMessage? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            => ReadCore(ref reader, options, default);
+
+        // The SSE parser already owns contiguous UTF-8. Preserve just the result bytes rather than
+        // constructing a JsonDocument whose metadata rental is sized from the complete text payload.
+        internal static JsonRpcMessage? ReadMessage(ReadOnlySpan<byte> data, JsonSerializerOptions options)
+        {
+            var reader = new Utf8JsonReader(data, new JsonReaderOptions
+            {
+                AllowTrailingCommas = options.AllowTrailingCommas,
+                CommentHandling = options.ReadCommentHandling,
+                MaxDepth = options.MaxDepth,
+            });
+            if (!reader.Read()) throw new JsonException("Expected a JSON-RPC message.");
+            var message = reader.TokenType == JsonTokenType.Null ? null : ReadCore(ref reader, options, data);
+            if (reader.Read()) throw new JsonException("Unexpected content after JSON-RPC message.");
+            return message;
+        }
+
+        private static JsonRpcMessage? ReadCore(ref Utf8JsonReader reader, JsonSerializerOptions options, ReadOnlySpan<byte> data)
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
@@ -88,23 +107,24 @@ public abstract class JsonRpcMessage
             JsonNode? parameters = null;
             JsonRpcErrorDetail? error = null;
             JsonNode? result = null;
+            byte[]? resultBytes = null;
             bool hasResult = false;
 
             while (true)
             {
                 bool success = reader.Read();
-                Debug.Assert(success, "custom converters are guaranteed to be passed fully buffered objects");
+                if (!success) throw new JsonException("Incomplete JSON-RPC message.");
 
                 if (reader.TokenType is JsonTokenType.EndObject)
                 {
                     break;
                 }
 
-                Debug.Assert(reader.TokenType is JsonTokenType.PropertyName);
+                if (reader.TokenType != JsonTokenType.PropertyName) throw new JsonException("Expected a property name.");
                 string propertyName = reader.GetString()!;
 
                 success = reader.Read();
-                Debug.Assert(success, "custom converters are guaranteed to be passed fully buffered objects");
+                if (!success) throw new JsonException("Incomplete JSON-RPC message.");
 
                 switch (propertyName)
                 {
@@ -135,7 +155,16 @@ public abstract class JsonRpcMessage
                         break;
 
                     case "result":
-                        result = JsonSerializer.Deserialize(ref reader, options.GetTypeInfo<JsonNode>());
+                        if (data.IsEmpty)
+                        {
+                            result = JsonSerializer.Deserialize(ref reader, options.GetTypeInfo<JsonNode>());
+                        }
+                        else
+                        {
+                            int start = checked((int)reader.TokenStartIndex);
+                            reader.Skip();
+                            resultBytes = data.Slice(start, checked((int)reader.BytesConsumed) - start).ToArray();
+                        }
                         hasResult = true;
                         break;
 
@@ -201,11 +230,9 @@ public abstract class JsonRpcMessage
                 if (hasResult)
                 {
                     // Messages with a result and id are success responses
-                    return new JsonRpcResponse
-                    {
-                        Id = id,
-                        Result = result
-                    };
+                    var response = resultBytes is null ? new JsonRpcResponse { Result = result } : JsonRpcResponse.Create(resultBytes);
+                    response.Id = id;
+                    return response;
                 }
 
                 // Error: Messages with an id but no method, error, or result are invalid
@@ -241,7 +268,23 @@ public abstract class JsonRpcMessage
                     JsonSerializer.Serialize(writer, notification, options.GetTypeInfo<JsonRpcNotification>());
                     break;
                 case JsonRpcResponse response:
-                    JsonSerializer.Serialize(writer, response, options.GetTypeInfo<JsonRpcResponse>());
+                    // Custom contracts retain their original serialization and node semantics.
+                    if (!ReferenceEquals(options, McpJsonUtilities.DefaultOptions) &&
+                        !ReferenceEquals(options, McpJsonUtilities.JsonContext.Default.Options))
+                    {
+                        JsonSerializer.Serialize(writer, response, options.GetTypeInfo<JsonRpcResponse>());
+                        break;
+                    }
+                    writer.WriteStartObject();
+                    if (response.HasResult)
+                    {
+                        writer.WritePropertyName("result");
+                        response.WriteResult(writer, options);
+                    }
+                    writer.WritePropertyName("id");
+                    JsonSerializer.Serialize(writer, response.Id, options.GetTypeInfo<RequestId>());
+                    if (response.JsonRpc is not null) writer.WriteString("jsonrpc", response.JsonRpc);
+                    writer.WriteEndObject();
                     break;
                 case JsonRpcError error:
                     JsonSerializer.Serialize(writer, error, options.GetTypeInfo<JsonRpcError>());

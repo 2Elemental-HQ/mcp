@@ -10,9 +10,6 @@ namespace ModelContextProtocol.Server;
 /// </summary>
 internal static class McpSseEventWriterExtensions
 {
-    [ThreadStatic]
-    private static Utf8JsonWriter? _jsonWriter;
-
     /// <summary>
     /// Writes an SSE item containing a <see cref="JsonRpcMessage"/>.
     /// </summary>
@@ -21,7 +18,7 @@ internal static class McpSseEventWriterExtensions
     /// <param name="cancellationToken">The token to monitor for cancellation requests.</param>
     /// <returns>A task representing the asynchronous write operation.</returns>
     public static ValueTask WriteAsync(this SseEventWriter writer, SseItem<JsonRpcMessage?> item, CancellationToken cancellationToken = default)
-        => writer.WriteAsync(item, FormatJsonRpcMessage, cancellationToken);
+        => writer.WriteSingleLineAsync(item, BoundedJsonMessageWriter.WriteAsync, cancellationToken);
 
     /// <summary>
     /// Writes an SSE item containing a <see cref="string"/>.
@@ -32,28 +29,6 @@ internal static class McpSseEventWriterExtensions
     /// <returns>A task representing the asynchronous write operation.</returns>
     public static ValueTask WriteAsync(this SseEventWriter writer, SseItem<string> item, CancellationToken cancellationToken = default)
         => writer.WriteAsync(item, FormatString, cancellationToken);
-
-    /// <summary>
-    /// Formats a <see cref="JsonRpcMessage"/> message by writing it as JSON to the buffer writer.
-    /// </summary>
-    private static void FormatJsonRpcMessage(SseItem<JsonRpcMessage?> item, IBufferWriter<byte> writer)
-    {
-        if (item.Data is null)
-        {
-            return;
-        }
-
-        if (_jsonWriter is null)
-        {
-            _jsonWriter = new Utf8JsonWriter(writer);
-        }
-        else
-        {
-            _jsonWriter.Reset(writer);
-        }
-
-        JsonSerializer.Serialize(_jsonWriter, item.Data, McpJsonUtilities.JsonContext.Default.JsonRpcMessage!);
-    }
 
     /// <summary>
     /// Formats a string by writing it as UTF-8 to the buffer writer.
