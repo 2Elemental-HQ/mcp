@@ -24,7 +24,7 @@ The result path repeatedly materializes JSON nodes and whole-result escaping buf
 
 See [final-results.md](final-results.md) and [reproduction source](repro/Program.cs). Build both the exact upstream base and candidate with the same SDK/runtime and fixture. Each patched route validates 302/302 complete answers with SHA-256; the upstream comparison validates only the two first answers. The JSON evidence includes failed responses, binary SHA-256, independent server/client allocation/heap/RSS figures, limits and latency.
 
-See [verification.md](verification.md) for compatibility, cancellation/fault/backpressure tests, older-target checks and the outstanding cloud CI limitation. The source measured is `2142bb821b142dd31d9ceaac77e3a1304d259a4f`.
+See [verification.md](verification.md) for compatibility, cancellation/fault/backpressure tests, older-target checks and the cloud CI results and remaining platform limitations. The source measured is `2142bb821b142dd31d9ceaac77e3a1304d259a4f`.
 
 ## Review questions
 

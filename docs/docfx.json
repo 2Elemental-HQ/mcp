@@ -30,7 +30,8 @@
           "images/**",
           "experiments/bounded-streaming/*.json",
           "experiments/bounded-streaming/repro/*",
-          "experiments/bounded-streaming/build-candidate.py"
+          "experiments/bounded-streaming/build-candidate.py",
+          "experiments/bounded-streaming/probe-upstream-sse.py"
         ]
       }
     ],

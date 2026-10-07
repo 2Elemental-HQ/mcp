@@ -30,7 +30,7 @@ public sealed class SseJsonValidationTests
             if (request.Method != HttpMethod.Post) return new HttpResponseMessage(HttpStatusCode.MethodNotAllowed);
             using var document = JsonDocument.Parse(await request.Content!.ReadAsStringAsync());
             var root = document.RootElement;
-            if (!root.TryGetProperty("id", out var id)) return new HttpResponseMessage(HttpStatusCode.Accepted);
+            if (!root.TryGetProperty("id", out var id)) return new HttpResponseMessage(HttpStatusCode.Accepted) { Content = new StringContent(string.Empty) };
             if (root.GetProperty("method").GetString() == "initialize")
             {
                 var version = root.GetProperty("params").GetProperty("protocolVersion").GetString();

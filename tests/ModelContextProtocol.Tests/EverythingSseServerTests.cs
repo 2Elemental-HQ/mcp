@@ -24,6 +24,9 @@ public class EverythingSseServerTests(ITestOutputHelper testOutputHelper) : Logg
     public async Task ConnectAndReceiveMessage_EverythingServerWithSse()
     {
         int port = CreatePortNumber();
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
+        timeout.CancelAfter(TestConstants.DefaultTimeout);
+        using var http = new HttpClient();
 
         await using var fixture = new EverythingSseServerFixture(port);
         await fixture.StartAsync();
@@ -40,21 +43,30 @@ public class EverythingSseServerTests(ITestOutputHelper testOutputHelper) : Logg
         };
 
         // Create client and run tests
-        await using var client = await McpClient.CreateAsync(
-            new HttpClientTransport(defaultConfig),
-            defaultOptions, 
+        TestOutputHelper.WriteLine("SSE fixture ready; creating SDK client.");
+        var client = await McpClient.CreateAsync(
+            new HttpClientTransport(defaultConfig, http),
+            defaultOptions,
             loggerFactory: LoggerFactory,
-            cancellationToken: TestContext.Current.CancellationToken);
-        var tools = await client.ListToolsAsync(cancellationToken: TestContext.Current.CancellationToken);
+            cancellationToken: timeout.Token).WaitAsync(TestConstants.DefaultTimeout, TestContext.Current.CancellationToken);
+        try
+        {
+            TestOutputHelper.WriteLine("Client initialized; requesting tools.");
+            var tools = await client.ListToolsAsync(cancellationToken: timeout.Token);
+            Assert.NotEmpty(tools);
+            TestOutputHelper.WriteLine("Complete tools response received.");
+        }
+        finally { await DisposeClientAsync(client, http); }
 
-        // assert
-        Assert.NotEmpty(tools);
     }
 
     [Fact]
     public async Task Sampling_Sse_EverythingServer()
     {
         int port = CreatePortNumber();
+        using var timeout = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
+        timeout.CancelAfter(TestConstants.DefaultTimeout);
+        using var http = new HttpClient();
 
         await using var fixture = new EverythingSseServerFixture(port);
         await fixture.StartAsync();
@@ -83,24 +95,51 @@ public class EverythingSseServerTests(ITestOutputHelper testOutputHelper) : Logg
             }
         };
 
-        await using var client = await McpClient.CreateAsync(
-            new HttpClientTransport(defaultConfig),
+        TestOutputHelper.WriteLine("SSE fixture ready; creating SDK client.");
+        var client = await McpClient.CreateAsync(
+            new HttpClientTransport(defaultConfig, http),
             defaultOptions,
             loggerFactory: LoggerFactory,
-            cancellationToken: TestContext.Current.CancellationToken);
+            cancellationToken: timeout.Token).WaitAsync(TestConstants.DefaultTimeout, TestContext.Current.CancellationToken);
 
-        // Call the server's trigger-sampling-request tool which should trigger our sampling handler
-        var result = await client.CallToolAsync("trigger-sampling-request", new Dictionary<string, object?>
-            {
-                ["prompt"] = "Test prompt",
-                ["maxTokens"] = 100
-            }, cancellationToken: TestContext.Current.CancellationToken);
+        try
+        {
+            TestOutputHelper.WriteLine("Client initialized; requesting sampling.");
+            // Call the server's trigger-sampling-request tool which should trigger our sampling handler
+            var result = await client.CallToolAsync("trigger-sampling-request", new Dictionary<string, object?>
+                {
+                    ["prompt"] = "Test prompt",
+                    ["maxTokens"] = 100
+                }, cancellationToken: timeout.Token);
 
-        // assert
-        Assert.NotNull(result);
-        Assert.Equal(1, samplingHandlerCalls);
-        var textContent = Assert.Single(result.Content.OfType<TextContentBlock>());
-        Assert.Equal("text", textContent.Type);
-        Assert.False(string.IsNullOrEmpty(textContent.Text));
+            // assert
+            Assert.NotNull(result);
+            Assert.Equal(1, samplingHandlerCalls);
+            var textContent = Assert.Single(result.Content.OfType<TextContentBlock>());
+            Assert.Equal("text", textContent.Type);
+            Assert.False(string.IsNullOrEmpty(textContent.Text));
+            TestOutputHelper.WriteLine("Complete sampling response received.");
+        }
+        finally { await DisposeClientAsync(client, http); }
+
+    }
+
+    /// <summary>
+    /// Reports a stuck SDK shutdown as a failure, then releases the owned HTTP connection for cleanup.
+    /// </summary>
+    private async Task DisposeClientAsync(McpClient client, HttpClient http)
+    {
+        TestOutputHelper.WriteLine("Disposing SDK client.");
+        var disposal = client.DisposeAsync().AsTask();
+        try
+        {
+            await disposal.WaitAsync(TestConstants.DefaultTimeout, TestContext.Current.CancellationToken);
+            TestOutputHelper.WriteLine("SDK client disposed.");
+        }
+        finally
+        {
+            // Cleanup must not hide a timeout: WaitAsync's failure still leaves this method.
+            http.Dispose();
+        }
     }
 }

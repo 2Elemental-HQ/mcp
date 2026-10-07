@@ -61,6 +61,11 @@ jobs:
     - name: 🏗️ Build
       run: make build CONFIGURATION=${{ matrix.configuration }}
 
+    - name: Diagnose upstream .NET Framework SSE fixture
+      if: runner.os == 'Windows' && matrix.configuration == 'Release'
+      timeout-minutes: 10
+      run: python docs/experiments/bounded-streaming/probe-upstream-sse.py --configuration Release
+
     - name: 🧪 Test
       run: make test CONFIGURATION=${{ matrix.configuration }}
 
