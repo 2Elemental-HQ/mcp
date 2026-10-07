@@ -22,7 +22,7 @@ public sealed class BoundedTextSerializationTests
     public void MixedLiteralAndEscapedUnicodeMatchesFramework(int prefixLength)
     {
         var text = string.Concat(new string('x', prefixLength), "😀é\n\t", new string('y', 8192), "😀");
-        var quoted = JsonSerializer.Serialize(text, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
+        var quoted = JsonSerializer.Serialize(text, new JsonSerializerOptions(McpJsonUtilities.DefaultOptions) { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
         var json = string.Concat("{\"type\":\"text\",\"text\":", quoted, "}");
         Assert.Equal(text, Assert.IsType<TextContentBlock>(JsonSerializer.Deserialize<ContentBlock>(json, McpJsonUtilities.DefaultOptions)).Text);
     }

@@ -34,15 +34,42 @@ inspection can materialize content. Client APIs still return complete strings;
 client memory is measured separately from server memory. Other transports and
 persistent event stores need separate acceptance evidence.
 
-## Current verification status
+## Verification and review
 
-This is an in-progress prototype. Initial wire-content tests pass, including
-split surrogate pairs, escaping, metadata, mixed content and repeated sources.
-The stronger HTTP backpressure test exposed eager materialization in the upstream
-server-metadata filter. That filter now updates typed metadata without opening the
-source. Nine HTTP tests, including blocked output, cancellation, destination failure
-and source disposal, pass. All four Core target frameworks build without warnings.
-Resource acceptance and production adoption still require reproducible before/after
-measurements.
+The final measured runtime source is `2142bb821b142dd31d9ceaac77e3a1304d259a4f`.
+Both routes pass 302/302 complete synthetic responses under separately enforced
+limits; unchanged upstream passes only the first response for each fixture.
+See [final results and reproduction](final-results.md), [compatibility and limits](verification.md),
+[buffer attribution](buffer-profiles.md), and the [unsent upstream proposal](upstream-proposal.md). Earlier preliminary
+measurements remain available with their original source identity.
 
+This is a draft for review, not a released package. The fork's cloud workflow
+registration remains unavailable; no cloud CI pass or production adoption is claimed.
 Only synthetic fixtures and SDK-relevant evidence belong in this public folder.
+
+## Example
+
+On .NET 10, return a normal `CallToolResult` whose content includes:
+
+```csharp
+new StreamingTextContentBlock(ReadText)
+```
+
+A bounded, repeatable source can open its file inside the iterator:
+
+```csharp
+async IAsyncEnumerable<ReadOnlyMemory<char>> ReadText(
+    [EnumeratorCancellation] CancellationToken cancellationToken)
+{
+    using var reader = File.OpenText(path);
+    var buffer = new char[4096];
+    while (await reader.ReadAsync(buffer.AsMemory(), cancellationToken) is int count && count != 0)
+    {
+        yield return buffer.AsMemory(0, count);
+    }
+}
+```
+
+Use `System.Runtime.CompilerServices` for `EnumeratorCancellation`. Keep the file
+immutable across enumerations, or provide another stable snapshot. The HTTP writer
+awaits downstream backpressure before the iterator can reuse its buffer.
