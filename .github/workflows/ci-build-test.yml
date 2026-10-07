@@ -35,6 +35,7 @@ jobs:
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
 
     steps:
     - name: 📥 Clone the repo
@@ -80,9 +81,9 @@ jobs:
       with:
         name: testresults-${{ matrix.os }}-${{ matrix.configuration }}
         path: artifacts/testresults/**
+        retention-days: 7
 
   publish-coverage:
     if: github.actor != 'dependabot[bot]'
     needs: build
     uses: ./.github/workflows/ci-code-coverage.yml
-    secrets: inherit

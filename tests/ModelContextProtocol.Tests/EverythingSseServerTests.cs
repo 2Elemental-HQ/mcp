@@ -4,13 +4,13 @@ using ModelContextProtocol.Tests.Utils;
 
 namespace ModelContextProtocol.Tests;
 
-public class DockerEverythingServerTests(ITestOutputHelper testOutputHelper) : LoggedTest(testOutputHelper)
+public class EverythingSseServerTests(ITestOutputHelper testOutputHelper) : LoggedTest(testOutputHelper)
 {
     /// <summary>Port number to be grabbed by the next test.</summary>
     private static int s_nextPort = 3000;
 
     // If the tests run concurrently against different versions of the runtime, tests can conflict with
-    // each other in the ports set up for interacting with containers. Ensure that such suites running
+    // each other in the ports set up for interacting with child servers. Ensure that such suites running
     // against different TFMs use different port numbers.
     private static readonly int s_portOffset = 1000 * (Environment.Version.Major switch
     {
@@ -20,10 +20,7 @@ public class DockerEverythingServerTests(ITestOutputHelper testOutputHelper) : L
 
     private static int CreatePortNumber() => Interlocked.Increment(ref s_nextPort) + s_portOffset;
 
-    public static bool IsDockerAvailable => EverythingSseServerFixture.IsDockerAvailable;
-
-    [Fact(Skip = "docker is not available", SkipUnless = nameof(IsDockerAvailable))]
-    [Trait("Execution", "Manual")]
+    [Fact]
     public async Task ConnectAndReceiveMessage_EverythingServerWithSse()
     {
         int port = CreatePortNumber();
@@ -54,8 +51,7 @@ public class DockerEverythingServerTests(ITestOutputHelper testOutputHelper) : L
         Assert.NotEmpty(tools);
     }
 
-    [Fact(Skip = "docker is not available", SkipUnless = nameof(IsDockerAvailable))]
-    [Trait("Execution", "Manual")]
+    [Fact]
     public async Task Sampling_Sse_EverythingServer()
     {
         int port = CreatePortNumber();
@@ -102,6 +98,7 @@ public class DockerEverythingServerTests(ITestOutputHelper testOutputHelper) : L
 
         // assert
         Assert.NotNull(result);
+        Assert.Equal(1, samplingHandlerCalls);
         var textContent = Assert.Single(result.Content.OfType<TextContentBlock>());
         Assert.Equal("text", textContent.Type);
         Assert.False(string.IsNullOrEmpty(textContent.Text));

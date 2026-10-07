@@ -1,111 +1,59 @@
-﻿using System.Diagnostics;
-using System.Net;
+using System.Diagnostics;
 using ModelContextProtocol.Tests.Utils;
 
 namespace ModelContextProtocol.Tests;
 
-public class EverythingSseServerFixture : IAsyncDisposable
+/// <summary>
+/// Owns an official Everything SSE server installed from the repository npm lockfile.
+/// </summary>
+public sealed class EverythingSseServerFixture(int port) : IAsyncDisposable
 {
-    private readonly int _port;
-    private readonly string _containerName;
+    private Process? _process;
+    private Task<string>? _output;
+    private Task<string>? _error;
 
-    public static bool IsDockerAvailable => _isDockerAvailable ??= CheckIsDockerAvailable();
-    private static bool? _isDockerAvailable;
-
-    public EverythingSseServerFixture(int port)
-    {
-        _port = port;
-        _containerName = $"mcp-everything-server-{_port}";
-    }
-
+    /// <summary>
+    /// Starts the server, drains diagnostic pipes, and fails explicitly if it cannot become ready.
+    /// </summary>
     public async Task StartAsync()
     {
-        var processStartInfo = new ProcessStartInfo
-        {
-            FileName = "docker",
-            Arguments = $"run -p {_port}:3001 --name {_containerName} --rm tzolov/mcp-everything-server:v1",
-            RedirectStandardInput = true,
-            RedirectStandardOutput = true,
-            RedirectStandardError = true,
-            UseShellExecute = false,
-        };
-
-        _ = Process.Start(processStartInfo)
-            ?? throw new InvalidOperationException($"Could not start process for {processStartInfo.FileName} with '{processStartInfo.Arguments}'.");
-
-        // Poll until the server is ready (up to 30 seconds)
-        using var httpClient = new HttpClient { Timeout = TestConstants.HttpClientPollingTimeout };
-        var endpoint = $"http://localhost:{_port}/sse";
+        _process = Process.Start(NodeHelpers.EverythingServerStartInfo(port))
+            ?? throw new InvalidOperationException("Could not start the pinned Everything server.");
+        _output = _process.StandardOutput.ReadToEndAsync();
+        _error = _process.StandardError.ReadToEndAsync();
+        using var client = new HttpClient { Timeout = TestConstants.HttpClientPollingTimeout };
         var deadline = DateTime.UtcNow.AddSeconds(30);
-        
         while (DateTime.UtcNow < deadline)
         {
+            if (_process.HasExited)
+                throw new InvalidOperationException($"Everything server exited with {_process.ExitCode}: {await _error}");
             try
             {
-                using var response = await httpClient.GetAsync(endpoint, HttpCompletionOption.ResponseHeadersRead);
-                if (response.IsSuccessStatusCode || response.StatusCode is HttpStatusCode.MethodNotAllowed)
-                {
-                    return;
-                }
+                using var response = await client.GetAsync($"http://localhost:{port}/sse", HttpCompletionOption.ResponseHeadersRead);
+                if (response.IsSuccessStatusCode) return;
             }
-            catch (Exception e) when (e is HttpRequestException or OperationCanceledException)
+            catch (Exception error) when (error is HttpRequestException or OperationCanceledException)
             {
-                // server not ready
+                // Startup has not opened the listener yet; a process exit is checked on every retry.
             }
-
             await Task.Delay(100);
         }
-
-        throw new InvalidOperationException($"Docker container failed to start within 30 seconds on port {_port}");
+        throw new InvalidOperationException($"Pinned Everything server did not become ready on port {port}.");
     }
+
+    /// <summary>
+    /// Stops the owned Node process and observes diagnostic readers even after a failed test.
+    /// </summary>
     public async ValueTask DisposeAsync()
     {
+        if (_process is null) return;
         try
         {
-
-            // Stop the container
-            var stopInfo = new ProcessStartInfo
-            {
-                FileName = "docker",
-                Arguments = $"stop {_containerName}",
-                UseShellExecute = false
-            };
-
-            using var stopProcess = Process.Start(stopInfo)
-                ?? throw new InvalidOperationException($"Could not stop process for {stopInfo.FileName} with '{stopInfo.Arguments}'.");
-            await stopProcess.WaitForExitAsync(TestConstants.DefaultTimeout);
+            if (!_process.HasExited) _process.Kill();
+            await _process.WaitForExitAsync(TestConstants.DefaultTimeout);
+            if (_output is not null) await _output;
+            if (_error is not null) await _error;
         }
-        catch (Exception ex)
-        {
-            // Log the exception but don't throw
-            await Console.Error.WriteLineAsync($"Error stopping Docker container: {ex.Message}");
-        }
-    }
-
-    private static bool CheckIsDockerAvailable()
-    {
-#if NET
-        try
-        {
-            ProcessStartInfo processStartInfo = new()
-            {
-                FileName = "docker",
-                // "docker info" returns a non-zero exit code if docker engine is not running.
-                Arguments = "info",
-                UseShellExecute = false,
-            };
-
-            using var process = Process.Start(processStartInfo);
-            process?.WaitForExit();
-            return process?.ExitCode is 0;
-        }
-        catch
-        {
-            return false;
-        }
-#else
-        // Do not run docker tests using .NET framework.
-        return false;
-#endif
+        finally { _process.Dispose(); }
     }
 }
