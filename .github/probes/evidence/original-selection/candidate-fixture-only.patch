@@ -1,0 +1,36 @@
+diff --git a/tests/ModelContextProtocol.AspNetCore.Tests/OAuth/AuthTests.cs b/tests/ModelContextProtocol.AspNetCore.Tests/OAuth/AuthTests.cs
+index 693c779..da42ac0 100644
+--- a/tests/ModelContextProtocol.AspNetCore.Tests/OAuth/AuthTests.cs
++++ b/tests/ModelContextProtocol.AspNetCore.Tests/OAuth/AuthTests.cs
+@@ -1093,7 +1093,7 @@ public async Task AuthorizationFlow_ConcurrentStepUps_ReuseSteppedUpToken_WhenCh
+         }, HttpClient, LoggerFactory);
+ 
+         await using var client = await McpClient.CreateAsync(
+-            transport, loggerFactory: LoggerFactory, cancellationToken: TestContext.Current.CancellationToken);
++            transport, clientOptions: new McpClientOptions { ProtocolVersion = Environment.GetEnvironmentVariable("MCP_PROBE_LEGACY") == "1" ? "2025-11-25" : null }, loggerFactory: LoggerFactory, cancellationToken: TestContext.Current.CancellationToken);
+ 
+         // Initial connect requests "mcp:tools" from protected resource metadata.
+         Assert.Single(requestedScopes);
+diff --git a/tests/ModelContextProtocol.TestOAuthServer/Program.cs b/tests/ModelContextProtocol.TestOAuthServer/Program.cs
+index 73663dc..f576ada 100644
+--- a/tests/ModelContextProtocol.TestOAuthServer/Program.cs
++++ b/tests/ModelContextProtocol.TestOAuthServer/Program.cs
+@@ -425,9 +425,17 @@ IResult HandleMetadataRequest(HttpContext context, string? issuerPath = null)
+             return Results.Redirect(redirectUrl);
+         });
+ 
+-        // Token endpoint
++        // Diagnostic fixture only: delay the first token exchange, preserving the production client timeout.
++        var probeTokenRequests = 0;
+         app.MapPost("/token", async (HttpContext context) =>
+         {
++            var probeSequence = Interlocked.Increment(ref probeTokenRequests);
++            if (probeSequence == 1 && int.TryParse(Environment.GetEnvironmentVariable("MCP_PROBE_TOKEN_DELAY_MS"), out var probeDelay) && probeDelay > 0)
++            {
++                var probeWatch = System.Diagnostics.Stopwatch.StartNew();
++                try { await Task.Delay(probeDelay, context.RequestAborted); }
++                finally { Console.WriteLine($"OAUTH_PROBE first_token_ms={probeWatch.ElapsedMilliseconds} aborted={context.RequestAborted.IsCancellationRequested}"); }
++            }
+             var form = await context.Request.ReadFormAsync();
+ 
+             // Authenticate client

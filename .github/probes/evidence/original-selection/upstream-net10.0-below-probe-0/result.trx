@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestRun id="66e806f3-e61d-47c7-b8e9-f826b4b30915" name="@runnervm8df0l 2026-10-07 14:54:36" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2010">
+  <Times creation="2026-10-07T14:54:36.4614377+00:00" queuing="2026-10-07T14:54:36.4614377+00:00" start="2026-10-07T14:54:32.6452840+00:00" finish="2026-10-07T14:54:36.4667871+00:00" />
+  <TestSettings name="default" id="b1b440f1-71a3-49c5-9d68-7d7eb150fb2b">
+    <Deployment runDeploymentRoot="_runnervm8df0l_2026-10-07_14_54_36" />
+  </TestSettings>
+  <Results>
+    <UnitTestResult executionId="2fc430c8-27f5-49ac-8c1d-92a81a5bcafc" testId="3bf283ef-027c-27e3-e27e-5d7ce69dd116" testName="ModelContextProtocol.AspNetCore.Tests.OAuth.AuthTests.AuthorizationFlow_ConcurrentStepUps_ReuseSteppedUpToken_WhenChallengeAddsNoNewScope" computerName="runnervm8df0l" duration="00:00:02.2744889" startTime="2026-10-07T14:54:34.0609219+00:00" endTime="2026-10-07T14:54:36.3467633+00:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Passed" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" relativeResultsDirectory="2fc430c8-27f5-49ac-8c1d-92a81a5bcafc">
+      <Output>
+        <StdOut>| [2026-10-07T14:54:34] Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServer Warning: The ASP.NET Core developer certificate is not trusted. For information about trusting the ASP.NET Core developer certificate, see https://aka.ms/aspnet/https-trust-dev-cert
+| [2026-10-07T14:54:34] Microsoft.Hosting.Lifetime Information: Now listening on: https://localhost:7029
+| [2026-10-07T14:54:34] Microsoft.Hosting.Lifetime Information: Application started. Press Ctrl+C to shut down.
+| [2026-10-07T14:54:34] Microsoft.Hosting.Lifetime Information: Hosting environment: Production
+| [2026-10-07T14:54:34] Microsoft.Hosting.Lifetime Information: Content root path: /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.AspNetCore.Tests/Release/net10.0
+| [2026-10-07T14:54:34] Microsoft.Extensions.Hosting.Internal.Host Debug: Hosting starting
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager Information: User profile is available. Using '/home/runner/.aspnet/DataProtection-Keys' as key repository; keys will not be encrypted at rest.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.Repositories.FileSystemXmlRepository Debug: Reading data from file '/home/runner/.aspnet/DataProtection-Keys/key-0861188b-f6ff-4b5d-8acb-643603a15e1b.xml'.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.KeyManagement.XmlKeyManager Debug: Found key {0861188b-f6ff-4b5d-8acb-643603a15e1b}.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.KeyManagement.DefaultKeyResolver Debug: Considering key {0861188b-f6ff-4b5d-8acb-643603a15e1b} with expiration date 2027-01-05 14:50:28Z as default key.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.TypeForwardingActivator Debug: Forwarded activator type request from Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Version=9.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60 to Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel.AuthenticatedEncryptorDescriptorDeserializer, Microsoft.AspNetCore.DataProtection, Culture=neutral, PublicKeyToken=adb9793829ddae60
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ManagedAuthenticatedEncryptorFactory Debug: Using managed symmetric algorithm 'System.Security.Cryptography.Aes'.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ManagedAuthenticatedEncryptorFactory Debug: Using managed keyed hash algorithm 'System.Security.Cryptography.HMACSHA256'.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.KeyManagement.KeyRingProvider Debug: Using key {0861188b-f6ff-4b5d-8acb-643603a15e1b} as the default key.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.DataProtection.Internal.DataProtectionHostedService Debug: Key ring with default key {0861188b-f6ff-4b5d-8acb-643603a15e1b} was loaded during application startup.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Server.Kestrel Debug: No listening endpoints were configured. Binding to http://localhost:5000 by default.
+| [2026-10-07T14:54:34] Microsoft.Hosting.Lifetime Information: Now listening on: http://localhost:5000
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Debug: Loaded hosting startup assembly ModelContextProtocol.AspNetCore.Tests
+| [2026-10-07T14:54:34] Microsoft.Hosting.Lifetime Information: Application started. Press Ctrl+C to shut down.
+| [2026-10-07T14:54:34] Microsoft.Hosting.Lifetime Information: Hosting environment: Production
+| [2026-10-07T14:54:34] Microsoft.Hosting.Lifetime Information: Content root path: /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.AspNetCore.Tests/Release/net10.0
+| [2026-10-07T14:54:34] Microsoft.Extensions.Hosting.Internal.Host Debug: Hosting started
+| [2026-10-07T14:54:34] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ sending method 'server/discover' request.
+| [2026-10-07T14:54:34] ModelContextProtocol.Client.AutoDetectingClientSessionTransport Debug: http://localhost:5000/ attempting to connect using Streamable HTTP transport.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "d6129f492320416b897257ef2c83d17a" accepted.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "d6129f492320416b897257ef2c83d17a" started.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST http://localhost:5000/ - application/json -
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was not authenticated.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Authorization.AuthorizationMiddleware Debug: Policy authentication schemes  did not succeed
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Information: Authorization failed. These requirements were not met:
+DenyAnonymousAuthorizationRequirement: Requires an authenticated user.
+| [2026-10-07T14:54:34] ModelContextProtocol.AspNetCore.Authentication.McpAuthenticationHandler Information: AuthenticationScheme: McpAuth was challenged.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "d6129f492320416b897257ef2c83d17a" completed keep alive response.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST http://localhost:5000/ - 401 0 - 66.1216ms
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "d6129f492320416b897257ef2c83d17a", Request id "d6129f492320416b897257ef2c83d17a:00000001": started reading request body.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "d6129f492320416b897257ef2c83d17a", Request id "d6129f492320416b897257ef2c83d17a:00000001": done reading request body.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET http://localhost:5000/.well-known/oauth-protected-resource/ - - -
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: No candidates found for the request path '/.well-known/oauth-protected-resource/'
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request did not match any endpoints
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Http.Result.JsonResult Information: Writing value of type 'ProtectedResourceMetadata' as Json.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "d6129f492320416b897257ef2c83d17a" completed keep alive response.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET http://localhost:5000/.well-known/oauth-protected-resource/ - 200 - application/json;+charset=utf-8 10.3052ms
+| [2026-10-07T14:54:34] ModelContextProtocol.Authentication.ClientOAuthProvider Debug: Validating resource metadata against original server URL: http://localhost:5000/
+| [2026-10-07T14:54:34] ModelContextProtocol.Authentication.ClientOAuthProvider Information: Selected authorization server: https://localhost:7029/ from 1 available servers
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET https://localhost:7029/.well-known/oauth-authorization-server - - -
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'HTTP: GET /.well-known/oauth-authorization-server =&gt; HandleMetadataRequest'
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Setting HTTP status code 200.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Writing value of type 'OAuthServerMetadata' as Json.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'HTTP: GET /.well-known/oauth-authorization-server =&gt; HandleMetadataRequest'
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET https://localhost:7029/.well-known/oauth-authorization-server - 200 - application/json;+charset=utf-8 80.1793ms
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET https://localhost:7029/authorize?client_id=demo-client&amp;redirect_uri=http%3a%2f%2flocalhost%3a1179%2fcallback&amp;response_type=code&amp;code_challenge=Rrf3CzlW51q5WZE0Vx90WX4pHtnpMTJt7H7VLH76M3Q&amp;code_challenge_method=S256&amp;state=JuzRWgWYCjq0dMNq_oT3IYEK43mHpHQXwyoVTx3nMNU&amp;resource=http%3a%2f%2flocalhost%3a5000&amp;scope=mcp%3atools - - -
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'HTTP: GET /authorize'
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Http.Result.RedirectResult Information: Executing RedirectResult, redirecting to http://localhost:1179/callback?code=3IqFqQPDhQ8Bg7xHJqmR3nFSp8AwgI-EllwuRuW6ZJE&amp;state=JuzRWgWYCjq0dMNq_oT3IYEK43mHpHQXwyoVTx3nMNU&amp;iss=https%3A%2F%2Flocalhost%3A7029.
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'HTTP: GET /authorize'
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET https://localhost:7029/authorize?client_id=demo-client&amp;redirect_uri=http%3a%2f%2flocalhost%3a1179%2fcallback&amp;response_type=code&amp;code_challenge=Rrf3CzlW51q5WZE0Vx90WX4pHtnpMTJt7H7VLH76M3Q&amp;code_challenge_method=S256&amp;state=JuzRWgWYCjq0dMNq_oT3IYEK43mHpHQXwyoVTx3nMNU&amp;resource=http%3a%2f%2flocalhost%3a5000&amp;scope=mcp%3atools - 302 0 - 5.9607ms
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST https://localhost:7029/token - application/x-www-form-urlencoded 277
+| [2026-10-07T14:54:34] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'HTTP: POST /token'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Setting HTTP status code 200.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Writing value of type 'TokenResponse' as Json.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'HTTP: POST /token'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST https://localhost:7029/token - 200 - application/json;+charset=utf-8 1279.7408ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Authentication.ClientOAuthProvider Information: OAuth authorization completed successfully
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST http://localhost:5000/ - application/json -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET https://localhost:7029/.well-known/openid-configuration - - -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'HTTP: GET /.well-known/openid-configuration =&gt; HandleMetadataRequest'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Setting HTTP status code 200.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Writing value of type 'OAuthServerMetadata' as Json.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'HTTP: GET /.well-known/openid-configuration =&gt; HandleMetadataRequest'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET https://localhost:7029/.well-known/openid-configuration - 200 - application/json;+charset=utf-8 9.1276ms
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET https://localhost:7029/.well-known/jwks.json - - -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'HTTP: GET /.well-known/jwks.json'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Setting HTTP status code 200.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Writing value of type 'JsonWebKeySet' as Json.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'HTTP: GET /.well-known/jwks.json'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET https://localhost:7029/.well-known/jwks.json - 200 - application/json;+charset=utf-8 3.7278ms
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "d6129f492320416b897257ef2c83d17a", Request id "d6129f492320416b897257ef2c83d17a:00000003": started reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "d6129f492320416b897257ef2c83d17a", Request id "d6129f492320416b897257ef2c83d17a:00000003": done reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.JsonResult Information: Setting HTTP status code 400.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.JsonResult Information: Writing value of type 'JsonRpcError' as Json.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "d6129f492320416b897257ef2c83d17a" completed keep alive response.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST http://localhost:5000/ - 400 - application/json;+charset=utf-8 130.0202ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.AutoDetectingClientSessionTransport Information: http://localhost:5000/ using Streamable HTTP transport.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ sending method 'initialize' request.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST http://localhost:5000/ - application/json -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "d6129f492320416b897257ef2c83d17a", Request id "d6129f492320416b897257ef2c83d17a:00000004": started reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "d6129f492320416b897257ef2c83d17a", Request id "d6129f492320416b897257ef2c83d17a:00000004": done reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Debug: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) read JsonRpcRequest message from channel.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Information: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) method 'initialize' request handler called.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Debug: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) sending message.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "d6129f492320416b897257ef2c83d17a" completed keep alive response.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.StreamableHttpClientSessionTransport Debug: http://localhost:5000/ transport received message with ID '2'.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST http://localhost:5000/ - 200 - text/event-stream 71.9415ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ read JsonRpcResponse message from channel.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Information: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) method 'initialize' request handler completed in 11.0145ms.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET http://localhost:5000/ - - -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: GET /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'MCP Streamable HTTP | HTTP: GET /'
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ waiting for response to request '2' for method 'initialize'.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ Request response received for method initialize
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Information: Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) client received server '{"name":"ModelContextProtocol.AspNetCore.Tests","version":"1.0.0.0"}' capabilities: '{"logging":{},"tools":{"listChanged":true}}'.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ sending message.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18" accepted.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18" started.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST http://localhost:5000/ - application/json -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18", Request id "655ae048c0974fc4b35de7a27ce14e18:00000001": started reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18", Request id "655ae048c0974fc4b35de7a27ce14e18:00000001": done reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Debug: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) read JsonRpcNotification message from channel.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18" completed keep alive response.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST http://localhost:5000/ - 202 0 - 1.1420ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Information: Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) client created and connected.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ sending method 'tools/call' request.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST http://localhost:5000/ - application/json -
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ sending method 'tools/call' request.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "ba72b7c353a74df3b070c0f750adf8c2" accepted.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "ba72b7c353a74df3b070c0f750adf8c2" started.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST http://localhost:5000/ - application/json -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18", Request id "655ae048c0974fc4b35de7a27ce14e18:00000002": started reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18", Request id "655ae048c0974fc4b35de7a27ce14e18:00000002": done reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "ba72b7c353a74df3b070c0f750adf8c2", Request id "ba72b7c353a74df3b070c0f750adf8c2:00000001": started reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "ba72b7c353a74df3b070c0f750adf8c2", Request id "ba72b7c353a74df3b070c0f750adf8c2:00000001": done reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "ba72b7c353a74df3b070c0f750adf8c2" completed keep alive response.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18" completed keep alive response.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST http://localhost:5000/ - 403 - - 0.9178ms
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST http://localhost:5000/ - 403 - - 1.4299ms
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba" accepted.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba" started.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET http://localhost:5000/.well-known/oauth-protected-resource - - -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: No candidates found for the request path '/.well-known/oauth-protected-resource'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request did not match any endpoints
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.JsonResult Information: Writing value of type 'ProtectedResourceMetadata' as Json.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba" completed keep alive response.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET http://localhost:5000/.well-known/oauth-protected-resource - 200 - application/json;+charset=utf-8 0.7712ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Authentication.ClientOAuthProvider Debug: Validating resource metadata against original server URL: http://localhost:5000/
+| [2026-10-07T14:54:36] ModelContextProtocol.Authentication.ClientOAuthProvider Information: Selected authorization server: https://localhost:7029/ from 1 available servers
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET https://localhost:7029/.well-known/oauth-authorization-server - - -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'HTTP: GET /.well-known/oauth-authorization-server =&gt; HandleMetadataRequest'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Setting HTTP status code 200.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Writing value of type 'OAuthServerMetadata' as Json.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'HTTP: GET /.well-known/oauth-authorization-server =&gt; HandleMetadataRequest'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET https://localhost:7029/.well-known/oauth-authorization-server - 200 - application/json;+charset=utf-8 0.6486ms
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET https://localhost:7029/authorize?client_id=demo-client&amp;redirect_uri=http%3a%2f%2flocalhost%3a1179%2fcallback&amp;response_type=code&amp;code_challenge=FkDaudI59zJ1RQz9UvyXtXxcqpzVqFhfGiaalxEUoY0&amp;code_challenge_method=S256&amp;state=wDxj4H2gyki59I6bfiDN0ksBn1rMUrUmyRNoilwS58c&amp;resource=http%3a%2f%2flocalhost%3a5000&amp;scope=files%3aread+mcp%3atools - - -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'HTTP: GET /authorize'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.RedirectResult Information: Executing RedirectResult, redirecting to http://localhost:1179/callback?code=Lcwr4s5i59OV42XYkjDrjsLKXPfX6HdpEcttZ33_rZY&amp;state=wDxj4H2gyki59I6bfiDN0ksBn1rMUrUmyRNoilwS58c&amp;iss=https%3A%2F%2Flocalhost%3A7029.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'HTTP: GET /authorize'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET https://localhost:7029/authorize?client_id=demo-client&amp;redirect_uri=http%3a%2f%2flocalhost%3a1179%2fcallback&amp;response_type=code&amp;code_challenge=FkDaudI59zJ1RQz9UvyXtXxcqpzVqFhfGiaalxEUoY0&amp;code_challenge_method=S256&amp;state=wDxj4H2gyki59I6bfiDN0ksBn1rMUrUmyRNoilwS58c&amp;resource=http%3a%2f%2flocalhost%3a5000&amp;scope=files%3aread+mcp%3atools - 302 0 - 0.3884ms
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST https://localhost:7029/token - application/x-www-form-urlencoded 277
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'HTTP: POST /token'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Setting HTTP status code 200.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.OkObjectResult Information: Writing value of type 'TokenResponse' as Json.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'HTTP: POST /token'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST https://localhost:7029/token - 200 - application/json;+charset=utf-8 1.7841ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Authentication.ClientOAuthProvider Information: OAuth authorization completed successfully
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST http://localhost:5000/ - application/json -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba", Request id "2e6adcbec94c4f6e99f4c5e15e3844ba:00000002": started reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba", Request id "2e6adcbec94c4f6e99f4c5e15e3844ba:00000002": done reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "77e4681ac1e2461992d17f4457f765f2" accepted.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "77e4681ac1e2461992d17f4457f765f2" started.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Debug: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) read JsonRpcRequest message from channel.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 GET http://localhost:5000/.well-known/oauth-protected-resource - - -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: No candidates found for the request path '/.well-known/oauth-protected-resource'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request did not match any endpoints
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Http.Result.JsonResult Information: Writing value of type 'ProtectedResourceMetadata' as Json.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "77e4681ac1e2461992d17f4457f765f2" completed keep alive response.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET http://localhost:5000/.well-known/oauth-protected-resource - 200 - application/json;+charset=utf-8 0.2801ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Authentication.ClientOAuthProvider Debug: Validating resource metadata against original server URL: http://localhost:5000/
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 POST http://localhost:5000/ - application/json -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "77e4681ac1e2461992d17f4457f765f2", Request id "77e4681ac1e2461992d17f4457f765f2:00000002": started reading request body.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Information: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) method 'tools/call' request handler called.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel Debug: Connection id "77e4681ac1e2461992d17f4457f765f2", Request id "77e4681ac1e2461992d17f4457f765f2:00000002": done reading request body.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Debug: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) read JsonRpcRequest message from channel.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Information: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) method 'tools/call' request handler called.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Information: "read-tool" completed. IsError = False.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Information: "read-tool" completed. IsError = False.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Debug: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) sending message.
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Information: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) method 'tools/call' request handler completed in 21.6753ms.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Debug: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) sending message.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "77e4681ac1e2461992d17f4457f765f2" completed keep alive response.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.StreamableHttpClientSessionTransport Debug: http://localhost:5000/ transport received message with ID '4'.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST http://localhost:5000/ - 200 - text/event-stream 22.9608ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Server.McpServer Information: Server (ModelContextProtocol.AspNetCore.Tests 1.0.0.0), Client (ModelContextProtocol.AspNetCore.Tests 1.0.0.0) method 'tools/call' request handler completed in 22.4058ms.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ read JsonRpcResponse message from channel.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'MCP Streamable HTTP | HTTP: POST /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba" completed keep alive response.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ waiting for response to request '4' for method 'tools/call'.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.StreamableHttpClientSessionTransport Debug: http://localhost:5000/ transport received message with ID '3'.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 POST http://localhost:5000/ - 200 - text/event-stream 25.1407ms
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ waiting for response to request '3' for method 'tools/call'.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ read JsonRpcResponse message from channel.
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ Request response received for method tools/call
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Debug: http://localhost:5000/ Request response received for method tools/call
+| [2026-10-07T14:54:36] ModelContextProtocol.Client.McpClient Information: http://localhost:5000/ message processing canceled.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "d6129f492320416b897257ef2c83d17a" disconnecting.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request starting HTTP/1.1 DELETE http://localhost:5000/ - - -
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.Matching.DfaMatcher Debug: 1 candidate(s) found for the request path '/'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointRoutingMiddleware Debug: Request matched endpoint 'MCP Streamable HTTP | HTTP: DELETE /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'MCP Streamable HTTP | HTTP: GET /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 GET http://localhost:5000/ - 200 - text/event-stream 62.2151ms
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: Successfully validated the token.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerHandler Debug: AuthenticationScheme: Bearer was successfully authenticated.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Authorization.DefaultAuthorizationService Debug: Authorization was successful.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executing endpoint 'MCP Streamable HTTP | HTTP: DELETE /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "d6129f492320416b897257ef2c83d17a" stopped.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Routing.EndpointMiddleware Information: Executed endpoint 'MCP Streamable HTTP | HTTP: DELETE /'
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba" completed keep alive response.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Hosting.Diagnostics Information: Request finished HTTP/1.1 DELETE http://localhost:5000/ - 200 0 - 6.1627ms
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba" disconnecting.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "77e4681ac1e2461992d17f4457f765f2" disconnecting.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Some connections failed to close gracefully during server shutdown.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "2e6adcbec94c4f6e99f4c5e15e3844ba" stopped.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "77e4681ac1e2461992d17f4457f765f2" stopped.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Some connections failed to close gracefully during server shutdown.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18" disconnecting.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "ba72b7c353a74df3b070c0f750adf8c2" disconnecting.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "655ae048c0974fc4b35de7a27ce14e18" stopped.
+| [2026-10-07T14:54:36] Microsoft.AspNetCore.Server.Kestrel.Connections Debug: Connection id "ba72b7c353a74df3b070c0f750adf8c2" stopped.
+| [2026-10-07T14:54:36] Microsoft.Hosting.Lifetime Information: Application is shutting down...</StdOut>
+      </Output>
+    </UnitTestResult>
+  </Results>
+  <TestDefinitions>
+    <UnitTest name="ModelContextProtocol.AspNetCore.Tests.OAuth.AuthTests.AuthorizationFlow_ConcurrentStepUps_ReuseSteppedUpToken_WhenChallengeAddsNoNewScope" storage="/tmp/oauth-upstream-009b2mpx/artifacts/bin/modelcontextprotocol.aspnetcore.tests/release/net10.0/modelcontextprotocol.aspnetcore.tests.dll" id="3bf283ef-027c-27e3-e27e-5d7ce69dd116">
+      <Execution id="2fc430c8-27f5-49ac-8c1d-92a81a5bcafc" />
+      <TestMethod codeBase="/tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.AspNetCore.Tests/Release/net10.0/ModelContextProtocol.AspNetCore.Tests.dll" adapterTypeName="executor://xunit/VsTestRunner3/netcore/" className="ModelContextProtocol.AspNetCore.Tests.OAuth.AuthTests" name="AuthorizationFlow_ConcurrentStepUps_ReuseSteppedUpToken_WhenChallengeAddsNoNewScope" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestEntries>
+    <TestEntry testId="3bf283ef-027c-27e3-e27e-5d7ce69dd116" executionId="2fc430c8-27f5-49ac-8c1d-92a81a5bcafc" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <ResultSummary outcome="Completed">
+    <Counters total="1" executed="1" passed="1" failed="0" error="0" timeout="0" aborted="0" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" completed="0" inProgress="0" pending="0" />
+    <Output>
+      <StdOut>[xUnit.net 00:00:00.00] xUnit.net VSTest Adapter v3.1.5+1b188a7b0a (64-bit .NET 10.0.12)
+[xUnit.net 00:00:00.23]   Discovering: ModelContextProtocol.AspNetCore.Tests
+[xUnit.net 00:00:00.77]   Discovered:  ModelContextProtocol.AspNetCore.Tests
+[xUnit.net 00:00:00.97]   Starting:    ModelContextProtocol.AspNetCore.Tests
+[xUnit.net 00:00:03.36]   Finished:    ModelContextProtocol.AspNetCore.Tests (ID = '9ba3fd27d093790d0b0ee77413967c28ecc87f0c404b3822384caab00dbdd979')
+</StdOut>
+    </Output>
+  </ResultSummary>
+</TestRun>

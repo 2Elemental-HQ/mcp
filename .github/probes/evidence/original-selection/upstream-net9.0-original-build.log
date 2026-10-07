@@ -1,0 +1,50 @@
+  Determining projects to restore...
+  Restored /tmp/oauth-upstream-009b2mpx/tests/ModelContextProtocol.TestOAuthServer/ModelContextProtocol.TestOAuthServer.csproj (in 124 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/tests/ModelContextProtocol.ConformanceClient/ModelContextProtocol.ConformanceClient.csproj (in 164 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.AspNetCore/ModelContextProtocol.AspNetCore.csproj (in 319 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Core/ModelContextProtocol.Core.csproj (in 319 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/tests/ModelContextProtocol.ConformanceServer/ModelContextProtocol.ConformanceServer.csproj (in 319 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/tests/ModelContextProtocol.TestSseServer/ModelContextProtocol.TestSseServer.csproj (in 34 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Analyzers/ModelContextProtocol.Analyzers.csproj (in 58 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol/ModelContextProtocol.csproj (in 27 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Extensions.Tasks/ModelContextProtocol.Extensions.Tasks.csproj (in 32 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/samples/TestServerWithHosting/TestServerWithHosting.csproj (in 102 ms).
+  Restored /tmp/oauth-upstream-009b2mpx/tests/ModelContextProtocol.AspNetCore.Tests/ModelContextProtocol.AspNetCore.Tests.csproj (in 206 ms).
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Analyzers/ModelContextProtocol.Analyzers.csproj]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Analyzers/ModelContextProtocol.Analyzers.csproj]
+  ModelContextProtocol.Analyzers -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.Analyzers/Release/netstandard2.0/ModelContextProtocol.Analyzers.dll
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Core/ModelContextProtocol.Core.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Core/ModelContextProtocol.Core.csproj::TargetFramework=net9.0]
+  ModelContextProtocol.TestOAuthServer -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.TestOAuthServer/Release/net9.0/ModelContextProtocol.TestOAuthServer.dll
+  ModelContextProtocol.Core -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.Core/Release/net9.0/ModelContextProtocol.Core.dll
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol/ModelContextProtocol.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol/ModelContextProtocol.csproj::TargetFramework=net9.0]
+  ModelContextProtocol.ConformanceClient -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.ConformanceClient/Release/net9.0/ModelContextProtocol.ConformanceClient.dll
+  ModelContextProtocol -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol/Release/net9.0/ModelContextProtocol.dll
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Extensions.Tasks/ModelContextProtocol.Extensions.Tasks.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Extensions.Tasks/ModelContextProtocol.Extensions.Tasks.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.AspNetCore/ModelContextProtocol.AspNetCore.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.AspNetCore/ModelContextProtocol.AspNetCore.csproj::TargetFramework=net9.0]
+  ModelContextProtocol.Extensions.Tasks -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.Extensions.Tasks/Release/net9.0/ModelContextProtocol.Extensions.Tasks.dll
+  TestServerWithHosting -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/TestServerWithHosting/Release/net9.0/TestServerWithHosting.dll
+  ModelContextProtocol.AspNetCore -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.AspNetCore/Release/net9.0/ModelContextProtocol.AspNetCore.dll
+  ModelContextProtocol.ConformanceServer -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.ConformanceServer/Release/net9.0/ModelContextProtocol.ConformanceServer.dll
+  ModelContextProtocol.TestSseServer -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.TestSseServer/Release/net9.0/TestSseServer.dll
+  ModelContextProtocol.AspNetCore.Tests -> /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.AspNetCore.Tests/Release/net9.0/ModelContextProtocol.AspNetCore.Tests.dll
+
+Build succeeded.
+
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Analyzers/ModelContextProtocol.Analyzers.csproj]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Analyzers/ModelContextProtocol.Analyzers.csproj]
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Core/ModelContextProtocol.Core.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Core/ModelContextProtocol.Core.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol/ModelContextProtocol.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol/ModelContextProtocol.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Extensions.Tasks/ModelContextProtocol.Extensions.Tasks.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.Extensions.Tasks/ModelContextProtocol.Extensions.Tasks.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.build.tasks.git/10.0.401/build/Microsoft.Build.Tasks.Git.targets(25,5): warning : The URL of repository remote 'origin' is invalid: '/home/runner/work/mcp/mcp'. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.AspNetCore/ModelContextProtocol.AspNetCore.csproj::TargetFramework=net9.0]
+/home/runner/.nuget/packages/microsoft.sourcelink.common/10.0.401/build/Microsoft.SourceLink.Common.targets(56,5): warning : Source control information is not available - the generated source link is empty. [/tmp/oauth-upstream-009b2mpx/src/ModelContextProtocol.AspNetCore/ModelContextProtocol.AspNetCore.csproj::TargetFramework=net9.0]
+    10 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:14.18
