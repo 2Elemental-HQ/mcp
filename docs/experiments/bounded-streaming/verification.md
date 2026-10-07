@@ -14,11 +14,17 @@ The runtime patch measured in `final-synthetic-results.json` is commit `2142bb82
 | Native AOT publish and executable | Passed on macOS ARM64 |
 | Synthetic fixed-limit comparison | 302/302 full SHA-256 matches on each patched route; 2/302 upstream |
 
+## Review follow-up and candidate CI
+
+The complete local Release suite now passes **9,241 tests, with 99 existing skips and no failures**: Core 2,420 on each of net8/net9/net10; ASP.NET 639/639/646; analyzers 57. Skips are existing credential/default-extraction and inherited transport/capability-specific cases; they receive no coverage credit. No new skips or relaxed assertions were introduced. The official Everything SSE server pinned by the existing NPM lockfile replaces the incompatible external Docker image. Both fixture tests also pass on exact upstream with test-only fixture changes. net472 test compilation and DocFX resources were fixed; docs still fail on warnings. Supported multiline JSON-node tests pass on all modern targets.
+
+The table above preserves the earlier attempt and is superseded for final local regression status by these results. See [production review](production-review.md) and [package candidate](package-candidate.md) for findings, exact source, build limitations and effective Actions settings. The final package-source CI is [run 37617002141](https://github.com/2Elemental-HQ/mcp/actions/runs/37617002141), source `c04230cd11f8e73986c426da8c7c4e043348d371`. Its live job conclusions, including coverage, are authoritative; local success alone is not a cloud CI claim.
+
 The initial .NET 9 test failure used reflection serialization in a test while the suite disables reflection. The corrected test copies `McpJsonUtilities.DefaultOptions`; production behavior did not change. Full Core is not labeled green because the external-server failures remain. Skipped tests do not receive coverage credit.
 
 Focused behavior tests cover ordinary text and null wire values, public mutable result nodes, custom response converters, metadata/annotations, error content, repeatable sources, escaping and split Unicode, invalid surrogate rejection, SSE framework-equivalent parsing, trace logging, source/destination failures, cancellation, source disposal and backpressure. A blocked source is canceled on HTTP disconnect and a subsequent request can succeed. The source does not advance while the destination is blocked.
 
-The public fork has workflow files, but GitHub currently reports zero registered workflows and manual dispatch returns HTTP 404. Actions permissions report enabled. No cloud CI result is claimed. Cross-platform/Debug workflow verification remains open; local Release and native AOT results do not substitute for that matrix.
+Initially GitHub returned zero workflows and HTTP 404 on dispatch despite enabled permissions. Explicit repository activation registered the workflows. Only CI and reusable coverage are enabled, with all external contributor approval, read-only default token and seven-day artifact retention. The linked candidate CI now runs the cross-platform Debug/Release matrix. Earlier failed jobs remain available; net472 compilation and documentation failures were fixed rather than waived.
 
 ## Scope and limits
 

@@ -43,8 +43,10 @@ See [final results and reproduction](final-results.md), [compatibility and limit
 [buffer attribution](buffer-profiles.md), and the [unsent upstream proposal](upstream-proposal.md). Earlier preliminary
 measurements remain available with their original source identity.
 
-This is a draft for review, not a released package. The fork's cloud workflow
-registration remains unavailable; no cloud CI pass or production adoption is claimed.
+This is a draft for review, not a released package. Workflow registration is repaired;
+see the [production review](production-review.md) and [pinned package candidate](package-candidate.md)
+for regression disposition, CI links, reproducible package hashes and remaining boundaries.
+No production adoption or package publication has occurred.
 Only synthetic fixtures and SDK-relevant evidence belong in this public folder.
 
 ## Example
