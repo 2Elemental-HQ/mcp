@@ -365,19 +365,26 @@ internal sealed partial class McpServerImpl : McpServer
     {
         JsonRpcMessageFilter serverInfoFilter = next => async (message, cancellationToken) =>
         {
-            if (message is JsonRpcResponse { Result: JsonObject result } &&
+            if (message is JsonRpcResponse response &&
                 McpProtocolVersions.RequiresPerRequestMetadata(
                     message.Context?.ProtocolVersion ?? _negotiatedProtocolVersion))
             {
-                if (result["_meta"] is not JsonObject meta)
+                // Metadata must not force serialization of a deferred tool-content source.
+                JsonObject? meta = null;
+                if (response.TypedResult is Result typed)
                 {
-                    meta = new JsonObject();
-                    result["_meta"] = meta;
+                    meta = typed.Meta ??= new JsonObject();
                 }
-
-                meta[MetaKeys.ServerInfo] = JsonSerializer.SerializeToNode(
-                    serverInfo,
-                    McpJsonUtilities.JsonContext.Default.Implementation);
+                else if (response.Result is JsonObject result)
+                {
+                    meta = result["_meta"] as JsonObject;
+                    if (meta is null) result["_meta"] = meta = new JsonObject();
+                }
+                if (meta is not null)
+                {
+                    meta[MetaKeys.ServerInfo] = JsonSerializer.SerializeToNode(
+                        serverInfo, McpJsonUtilities.JsonContext.Default.Implementation);
+                }
             }
 
             await next(message, cancellationToken).ConfigureAwait(false);
@@ -1216,7 +1223,7 @@ internal sealed partial class McpServerImpl : McpServer
 
     private void SetRawHandler(string method, Func<JsonRpcRequest, CancellationToken, ValueTask<JsonNode?>> handler)
     {
-        _requestHandlers[method] = (request, ct) => handler(request, ct).AsTask();
+        _requestHandlers[method] = async (request, ct) => new JsonRpcResponse { Result = await handler(request, ct).ConfigureAwait(false) };
     }
 
     private void ConfigureResources(McpServerOptions options)
@@ -2107,8 +2114,8 @@ internal sealed partial class McpServerImpl : McpServer
     /// calls (elicitation, sampling, roots) and the handler is retried with the responses - allowing
     /// MRTR-native tools to work transparently with clients that don't support MRTR.
     /// </summary>
-    private async Task<JsonNode?> InvokeWithInputRequiredResultHandlingAsync(
-        Func<JsonRpcRequest, CancellationToken, Task<JsonNode?>> handler,
+    private async Task<JsonRpcResponse> InvokeWithInputRequiredResultHandlingAsync(
+        Func<JsonRpcRequest, CancellationToken, Task<JsonRpcResponse>> handler,
         JsonRpcRequest request,
         CancellationToken cancellationToken)
     {
@@ -2286,16 +2293,19 @@ internal sealed partial class McpServerImpl : McpServer
         }
     }
 
-    private static JsonNode? SerializeInputRequiredResult(InputRequiredResult inputRequiredResult) =>
-        JsonSerializer.SerializeToNode(inputRequiredResult, McpJsonUtilities.JsonContext.Default.InputRequiredResult);
+    private static JsonRpcResponse SerializeInputRequiredResult(InputRequiredResult inputRequiredResult) =>
+        JsonRpcResponse.Create(inputRequiredResult, McpJsonUtilities.JsonContext.Default.InputRequiredResult);
 
     /// <summary>
     /// Detects an <see cref="InputRequiredResult"/> that a handler surfaced by RETURNING it through the alternate
     /// result path (rather than throwing <see cref="InputRequiredException"/>), so both forms can be resolved
     /// identically for clients that don't natively support MRTR. Returns <see langword="null"/> for any other result.
     /// </summary>
-    private static InputRequiredResult? GetReturnedInputRequiredResult(JsonNode? result)
+    private static InputRequiredResult? GetReturnedInputRequiredResult(JsonRpcResponse response)
     {
+        if (response.TypedResult is InputRequiredResult inputRequired) return inputRequired;
+        if (response.TypedResult is Result typed && typed.ResultType != "input_required") return null;
+        var result = response.Result;
         if (result is JsonObject resultObject &&
             resultObject.TryGetPropertyValue("resultType", out var resultTypeNode) &&
             resultTypeNode?.GetValueKind() == JsonValueKind.String &&
@@ -2409,7 +2419,7 @@ internal sealed partial class McpServerImpl : McpServer
             // on the per-request DestinationBoundMcpServer. This is picked up synchronously
             // before any await, so the finally cleanup is safe.
             _mrtrContextsByRequestId[request.Id] = mrtrContext;
-            Task<JsonNode?> handlerTask;
+            Task<JsonRpcResponse> handlerTask;
             try
             {
                 handlerTask = originalHandler(request, handlerCts.Token);
@@ -2440,8 +2450,8 @@ internal sealed partial class McpServerImpl : McpServer
     /// If the handler throws <see cref="InputRequiredException"/>, the result is returned directly
     /// without storing a continuation (explicit MRTR path).
     /// </summary>
-    private async Task<JsonNode?> AwaitMrtrHandlerAsync(
-        Task<JsonNode?> handlerTask,
+    private async Task<JsonRpcResponse> AwaitMrtrHandlerAsync(
+        Task<JsonRpcResponse> handlerTask,
         MrtrContinuation continuation,
         Task<MrtrExchange> exchangeTask,
         CancellationToken cancellationToken)
@@ -2485,7 +2495,7 @@ internal sealed partial class McpServerImpl : McpServer
     /// double-reporting at Error) and decrements <see cref="_mrtrInFlightCount"/> when the
     /// handler completes, following the same in-flight tracking pattern as <see cref="McpSessionHandler"/>.
     /// </summary>
-    private async Task ObserveHandlerCompletionAsync(Task<JsonNode?> handlerTask)
+    private async Task ObserveHandlerCompletionAsync(Task<JsonRpcResponse> handlerTask)
     {
         try
         {
@@ -2516,7 +2526,7 @@ internal sealed partial class McpServerImpl : McpServer
     /// Awaits a handler task, catching <see cref="InputRequiredException"/> to convert it to an
     /// <see cref="InputRequiredResult"/> JSON response without storing a continuation.
     /// </summary>
-    private static async Task<JsonNode?> AwaitHandlerWithInputRequiredResultHandlingAsync(Task<JsonNode?> handlerTask)
+    private static async Task<JsonRpcResponse> AwaitHandlerWithInputRequiredResultHandlingAsync(Task<JsonRpcResponse> handlerTask)
     {
         try
         {

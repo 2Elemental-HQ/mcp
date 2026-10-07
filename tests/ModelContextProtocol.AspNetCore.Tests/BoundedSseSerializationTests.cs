@@ -54,16 +54,40 @@ public sealed class BoundedSseSerializationTests(ITestOutputHelper output) : Kes
     /// A failed destination is observed, its producer exits, and a subsequent request still succeeds.
     /// </summary>
     [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public async Task DestinationFailureOrCancellationReleasesProducer(bool cancel)
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+#if NET10_0_OR_GREATER
+    [InlineData(false, true)]
+    [InlineData(true, true)]
+#endif
+    public async Task DestinationFailureOrCancellationReleasesProducer(bool cancel, bool streaming)
     {
         var text = new string('"', 1048576);
         var blocked = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
         var completed = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
         bool inject = false;
+        int disposedSources = 0;
+        int yieldedSegments = 0;
+        ContentBlock content = new TextContentBlock { Text = text };
+#if NET10_0_OR_GREATER
+        async IAsyncEnumerable<ReadOnlyMemory<char>> Read([System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken token)
+        {
+            try
+            {
+                for (int offset = 0; offset < text.Length; offset += 4096)
+                {
+                    token.ThrowIfCancellationRequested();
+                    Interlocked.Increment(ref yieldedSegments);
+                    yield return text.AsMemory(offset, Math.Min(4096, text.Length - offset));
+                    await Task.Yield();
+                }
+            }
+            finally { Interlocked.Increment(ref disposedSources); }
+        }
+        if (streaming) content = new StreamingTextContentBlock(Read);
+#endif
         Builder.Services.AddMcpServer().WithHttpTransport(o => o.Stateless = true)
-            .WithTools([McpServerTool.Create(() => new CallToolResult { Content = [new TextContentBlock { Text = text }] }, new() { Name = "large" })]);
+            .WithTools([McpServerTool.Create(() => new CallToolResult { Content = [content] }, new() { Name = "large" })]);
         await using var app = Builder.Build();
         app.Use(async (context, next) =>
         {
@@ -86,10 +110,12 @@ public sealed class BoundedSseSerializationTests(ITestOutputHelper output) : Kes
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
         var request = client.CallToolAsync("large", cancellationToken: cancellation.Token).AsTask();
         await blocked.Task.WaitAsync(TimeSpan.FromSeconds(10), TestContext.Current.CancellationToken);
+        if (streaming) Assert.Equal(1, Volatile.Read(ref yieldedSegments));
         if (cancel) cancellation.Cancel();
         var error = await Assert.ThrowsAnyAsync<Exception>(() => request.WaitAsync(TimeSpan.FromSeconds(10), TestContext.Current.CancellationToken));
         Assert.IsNotType<TimeoutException>(error);
         await completed.Task.WaitAsync(TimeSpan.FromSeconds(10), TestContext.Current.CancellationToken);
+        if (streaming) Assert.Equal(1, Volatile.Read(ref disposedSources));
         inject = false;
         var result = await client.CallToolAsync("large", cancellationToken: TestContext.Current.CancellationToken);
         Assert.Equal(text, Assert.IsType<TextContentBlock>(Assert.Single(result.Content)).Text);

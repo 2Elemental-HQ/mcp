@@ -1,4 +1,5 @@
 using ModelContextProtocol.Server;
+using System.Buffers;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Text.Json;
@@ -92,7 +93,21 @@ public abstract class JsonRpcMessage
             return message;
         }
 
-        private static JsonRpcMessage? ReadCore(ref Utf8JsonReader reader, JsonSerializerOptions options, ReadOnlySpan<byte> data)
+        internal static JsonRpcMessage? ReadMessage(ReadOnlySequence<byte> data, JsonSerializerOptions options)
+        {
+            var reader = new Utf8JsonReader(data, new JsonReaderOptions
+            {
+                AllowTrailingCommas = options.AllowTrailingCommas,
+                CommentHandling = options.ReadCommentHandling,
+                MaxDepth = options.MaxDepth,
+            });
+            if (!reader.Read()) throw new JsonException("Expected a JSON-RPC message.");
+            var message = reader.TokenType == JsonTokenType.Null ? null : ReadCore(ref reader, options, default, data);
+            if (reader.Read()) throw new JsonException("Unexpected content after JSON-RPC message.");
+            return message;
+        }
+
+        private static JsonRpcMessage? ReadCore(ref Utf8JsonReader reader, JsonSerializerOptions options, ReadOnlySpan<byte> data, ReadOnlySequence<byte> sequence = default)
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
@@ -155,7 +170,7 @@ public abstract class JsonRpcMessage
                         break;
 
                     case "result":
-                        if (data.IsEmpty)
+                        if (data.IsEmpty && sequence.IsEmpty)
                         {
                             result = JsonSerializer.Deserialize(ref reader, options.GetTypeInfo<JsonNode>());
                         }
@@ -163,7 +178,8 @@ public abstract class JsonRpcMessage
                         {
                             int start = checked((int)reader.TokenStartIndex);
                             reader.Skip();
-                            resultBytes = data.Slice(start, checked((int)reader.BytesConsumed) - start).ToArray();
+                            int length = checked((int)reader.BytesConsumed) - start;
+                            resultBytes = sequence.IsEmpty ? data.Slice(start, length).ToArray() : sequence.Slice(start, length).ToArray();
                         }
                         hasResult = true;
                         break;

@@ -41,7 +41,7 @@ public sealed class SseJsonValidationTests
             return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent($"data: {malformed}\n\ndata: {valid}\n\n", Encoding.UTF8, "text/event-stream") };
         };
         using var http = new HttpClient(handler);
-        await using var client = await McpClient.CreateAsync(new HttpClientTransport(new() { Endpoint = new Uri("http://localhost/mcp"), TransportMode = HttpTransportMode.StreamableHttp }, http), cancellationToken: TestContext.Current.CancellationToken);
+        await using var client = await McpClient.CreateAsync(new HttpClientTransport(new() { Endpoint = new Uri("http://localhost/mcp"), TransportMode = HttpTransportMode.StreamableHttp }, http), clientOptions: new McpClientOptions { ProtocolVersion = "2025-11-25" }, cancellationToken: TestContext.Current.CancellationToken);
         var result = await client.CallToolAsync("test", cancellationToken: TestContext.Current.CancellationToken);
         Assert.Equal("complete", Assert.IsType<TextContentBlock>(Assert.Single(result.Content)).Text);
     }

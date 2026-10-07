@@ -9,6 +9,7 @@ using ModelContextProtocol.Protocol;
 using System.Threading.Channels;
 using System.Net;
 using System.Text;
+using System.Buffers;
 
 namespace ModelContextProtocol.Client;
 
@@ -451,7 +452,7 @@ internal sealed partial class StreamableHttpClientSessionTransport : TransportBa
     {
         try
         {
-            await foreach (SseItem<JsonRpcMessage?> sseEvent in SseParser.Create<JsonRpcMessage?>(responseStream, ParseSseMessage).EnumerateAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (SseItem<JsonRpcMessage?> sseEvent in new SegmentedSseParser<JsonRpcMessage?>(responseStream, ParseSseMessage).EnumerateAsync(cancellationToken).ConfigureAwait(false))
             {
                 // Track event ID and retry interval for resumability
                 if (!string.IsNullOrEmpty(sseEvent.EventId))
@@ -486,16 +487,10 @@ internal sealed partial class StreamableHttpClientSessionTransport : TransportBa
         return default;
     }
 
-    private JsonRpcMessage? ParseSseMessage(string eventType, ReadOnlySpan<byte> data)
+    private JsonRpcMessage? ParseSseMessage(string eventType, ReadOnlySequence<byte> data)
     {
         if (data.IsEmpty) return null;
-        string? text = _logger.IsEnabled(LogLevel.Trace) ? Encoding.UTF8.GetString(
-#if NETSTANDARD2_0
-            data.ToArray()
-#else
-            data
-#endif
-        ) : null;
+        string? text = _logger.IsEnabled(LogLevel.Trace) ? Encoding.UTF8.GetString(data.ToArray()) : null;
         if (text is not null) LogTransportReceivedMessageSensitive(Name, text);
         try
         {

@@ -66,6 +66,14 @@ public sealed class JsonRpcResponse : JsonRpcMessageWithId
         _write = writer => JsonSerializer.Serialize(writer, result, typeInfo),
     };
 
+    internal static JsonRpcResponse Create(object? result, JsonTypeInfo typeInfo) => result is null ? new() { Result = null } : new()
+    {
+        Result = null,
+        _typedResult = result,
+        _materialize = () => JsonSerializer.SerializeToNode(result, typeInfo),
+        _write = writer => JsonSerializer.Serialize(writer, result, typeInfo),
+    };
+
     internal static JsonRpcResponse Create(byte[] result) => result.AsSpan().SequenceEqual("null"u8) ? new() { Result = null } : new()
     {
         Result = null,
@@ -73,6 +81,8 @@ public sealed class JsonRpcResponse : JsonRpcMessageWithId
         _materialize = () => JsonSerializer.Deserialize(result, McpJsonUtilities.JsonContext.Default.JsonNode),
         _write = writer => writer.WriteRawValue(result),
     };
+
+    internal object? TypedResult => _typedResult;
 
     internal bool HasResult => _materialize is not null || _result is not null;
 
@@ -93,6 +103,29 @@ public sealed class JsonRpcResponse : JsonRpcMessageWithId
             reader.Skip();
         }
         return isError;
+    }
+
+    internal bool IsInputRequired
+    {
+        get
+        {
+            if (_typedResult is Result typed) return typed.ResultType == "input_required";
+            if (_utf8Result is { } bytes)
+            {
+                var reader = new Utf8JsonReader(bytes);
+                if (!reader.Read() || reader.TokenType != JsonTokenType.StartObject) return false;
+                bool matchedValue = false;
+                while (reader.Read() && reader.TokenType != JsonTokenType.EndObject)
+                {
+                    bool matchedProperty = reader.ValueTextEquals("resultType"u8);
+                    reader.Read();
+                    if (matchedProperty) matchedValue = reader.TokenType == JsonTokenType.String && reader.ValueTextEquals("input_required"u8);
+                    reader.Skip();
+                }
+                return matchedValue;
+            }
+            return Result is JsonObject obj && obj["resultType"]?.GetValue<string>() == "input_required";
+        }
     }
 
     internal T? DeserializeResult<T>(JsonTypeInfo<T> typeInfo) => _utf8Result is { } bytes ? JsonSerializer.Deserialize(bytes, typeInfo)

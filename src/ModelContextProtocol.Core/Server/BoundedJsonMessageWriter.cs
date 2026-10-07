@@ -1,6 +1,7 @@
 using ModelContextProtocol.Protocol;
 using System.IO.Pipelines;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace ModelContextProtocol.Server;
 
@@ -15,6 +16,22 @@ internal static class BoundedJsonMessageWriter
     internal static async Task WriteAsync(JsonRpcMessage? message, Stream destination, CancellationToken cancellationToken)
     {
         if (message is null) return;
+#if NET10_0_OR_GREATER
+        if (message is JsonRpcResponse response && response.TypedResult is CallToolResult result &&
+            result.Content.Any(block => block is StreamingTextContentBlock))
+        {
+            await StreamingJsonMessageWriter.WriteAsync(response, result, destination, cancellationToken).ConfigureAwait(false);
+            return;
+        }
+#endif
+        await WriteValueAsync(message, McpJsonUtilities.JsonContext.Default.JsonRpcMessage, destination, cancellationToken).ConfigureAwait(false);
+    }
+
+    internal static Task WriteValueAsync<T>(T value, JsonTypeInfo<T> typeInfo, Stream destination, CancellationToken cancellationToken) =>
+        WriteCoreAsync(writer => JsonSerializer.Serialize(writer, value, typeInfo), destination, cancellationToken);
+
+    private static async Task WriteCoreAsync(Action<Utf8JsonWriter> serialize, Stream destination, CancellationToken cancellationToken)
+    {
         var pipe = new Pipe(new PipeOptions(pauseWriterThreshold: 65536, resumeWriterThreshold: 32768, useSynchronizationContext: false));
         using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var producer = Task.Run(async () =>
@@ -24,7 +41,7 @@ internal static class BoundedJsonMessageWriter
             {
                 using var output = new ProducerStream(pipe.Writer, cancellation.Token);
                 using var writer = new Utf8JsonWriter(output);
-                JsonSerializer.Serialize(writer, message, McpJsonUtilities.JsonContext.Default.JsonRpcMessage);
+                serialize(writer);
             }
             catch (Exception error) { failure = error; throw; }
             finally { await pipe.Writer.CompleteAsync(failure).ConfigureAwait(false); }

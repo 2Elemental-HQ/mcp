@@ -347,6 +347,28 @@ public abstract class ContentBlock
 
             switch (value)
             {
+#if NET10_0_OR_GREATER
+                case StreamingTextContentBlock streamingText:
+                    writer.WritePropertyName("text");
+                    var enumerator = streamingText.ReadAsync().GetAsyncEnumerator();
+                    try
+                    {
+                        while (enumerator.MoveNextAsync().AsTask().GetAwaiter().GetResult())
+                        {
+                            var segment = enumerator.Current.Span;
+                            while (!segment.IsEmpty)
+                            {
+                                int length = Math.Min(segment.Length, 4096);
+                                writer.WriteStringValueSegment(segment.Slice(0, length), false);
+                                writer.Flush();
+                                segment = segment.Slice(length);
+                            }
+                        }
+                        writer.WriteStringValueSegment(ReadOnlySpan<char>.Empty, true);
+                    }
+                    finally { enumerator.DisposeAsync().AsTask().GetAwaiter().GetResult(); }
+                    break;
+#endif
                 case TextContentBlock textContent:
                     #if NET10_0_OR_GREATER
                     writer.WritePropertyName("text");
