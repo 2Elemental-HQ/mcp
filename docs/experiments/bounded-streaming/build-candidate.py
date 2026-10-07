@@ -21,7 +21,7 @@ for project in projects:
     command = ["dotnet", "pack", f"src/{project}/{project}.csproj", "-c", "Release", "-o", str(output),
                f"-p:Version={version}", "-p:ContinuousIntegrationBuild=true", "-p:Deterministic=true",
                "-p:RepositoryUrl=https://github.com/2Elemental-HQ/mcp", f"-p:RepositoryCommit={source}",
-               "-p:PublishRepositoryUrl=true", f"-p:ArtifactsDir={output / 'build'}/", f"-p:PathMap={output}=/_/candidate%2C{repo}=/_"]
+               "-p:PublishRepositoryUrl=true", "-p:DebugType=none", "-p:DebugSymbols=false", "-p:IncludeSymbols=false", f"-p:ArtifactsDir={output / 'build'}/", f"-p:PathMap={output}=/_/candidate%2C{repo}=/_"]
     with (output / f"{project}.build.log").open("w") as log:
         subprocess.run(command, cwd=repo, stdout=log, stderr=subprocess.STDOUT, check=True)
 # NuGet embeds random OPC relationship ids/metadata filenames and wall-clock ZIP times.
@@ -50,6 +50,7 @@ for package in sorted([*output.glob("*.nupkg"), *output.glob("*.snupkg")]):
     temporary.replace(package)
 manifest = {"source": source, "version": version, "sdk": run(["dotnet", "--version"]),
             "upstreamBase": "3338e88e15c42cfc27465143c140d7d10f1a2707",
+            "symbols": "none; upstream logging-generator document order is not deterministic",
             "packages": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(output.glob("*.nupkg"))}}
 (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
 print(json.dumps(manifest, indent=2))

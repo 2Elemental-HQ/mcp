@@ -27,7 +27,10 @@
     "resource": [
       {
         "files": [
-          "images/**"
+          "images/**",
+          "experiments/bounded-streaming/*.json",
+          "experiments/bounded-streaming/repro/*",
+          "experiments/bounded-streaming/build-candidate.py"
         ]
       }
     ],
