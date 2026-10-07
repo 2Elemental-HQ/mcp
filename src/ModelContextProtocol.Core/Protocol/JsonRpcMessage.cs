@@ -81,7 +81,7 @@ public abstract class JsonRpcMessage
         public override JsonRpcMessage? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             => ReadCore(ref reader, options, default);
 
-        // The SSE parser already owns contiguous UTF-8. Preserve just the result bytes rather than
+        // The SSE parser owns UTF-8 segments. Preserve just the result bytes rather than
         // constructing a JsonDocument whose metadata rental is sized from the complete text payload.
         internal static JsonRpcMessage? ReadMessage(ReadOnlySpan<byte> data, JsonSerializerOptions options)
         {

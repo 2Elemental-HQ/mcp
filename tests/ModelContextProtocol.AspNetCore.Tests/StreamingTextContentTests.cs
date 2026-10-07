@@ -21,10 +21,10 @@ public sealed class StreamingTextContentTests(ITestOutputHelper output) : Kestre
     /// Arbitrary UTF-16 boundaries preserve escaping, metadata, and replayable source ownership.
     /// </summary>
     [Theory]
-    [InlineData(1)]
-    [InlineData(4096)]
-    [InlineData(100000)]
-    public async Task SegmentedTextPreservesCompleteResult(int segmentLength)
+    [InlineData(1, false)]
+    [InlineData(4096, true)]
+    [InlineData(100000, false)]
+    public async Task SegmentedTextPreservesCompleteResult(int segmentLength, bool isError)
     {
         Builder.Logging.SetMinimumLevel(LogLevel.Trace);
         var text = string.Concat(new string('"', 20000), "😀é\r\n<>&\\\ud800x\udc00");
@@ -44,12 +44,12 @@ public sealed class StreamingTextContentTests(ITestOutputHelper output) : Kestre
             }
             finally { disposed++; }
         }
-        var source = new StreamingTextContentBlock(Read) { Meta = new JsonObject { ["source"] = "synthetic" } };
+        var source = new StreamingTextContentBlock(Read) { Meta = new JsonObject { ["source"] = "synthetic" }, Annotations = new() { Priority = 0.75f, Audience = [Role.User] } };
         Assert.Equal(0, opened);
         var sharedResult = new CallToolResult
         {
             Content = [new TextContentBlock { Text = "before" }, source, new TextContentBlock { Text = "after" }],
-            IsError = false,
+            IsError = isError,
             StructuredContent = JsonSerializer.SerializeToElement(new { complete = true }),
             Meta = new JsonObject { ["result"] = "preserved" },
         };
@@ -69,8 +69,10 @@ public sealed class StreamingTextContentTests(ITestOutputHelper output) : Kestre
             var actual = Assert.IsType<TextContentBlock>(result.Content[1]);
             Assert.Equal(expected, actual.Text);
             Assert.Equal("synthetic", actual.Meta!["source"]!.GetValue<string>());
+            Assert.Equal(0.75f, actual.Annotations!.Priority);
+            Assert.Equal(Role.User, Assert.Single(actual.Annotations.Audience!));
             Assert.Equal("after", Assert.IsType<TextContentBlock>(result.Content[2]).Text);
-            Assert.False(result.IsError);
+            Assert.Equal(isError, result.IsError);
             Assert.True(result.StructuredContent!.Value.GetProperty("complete").GetBoolean());
             Assert.Equal("preserved", result.Meta!["result"]!.GetValue<string>());
         }
@@ -78,5 +80,49 @@ public sealed class StreamingTextContentTests(ITestOutputHelper output) : Kestre
         Assert.Equal(3, opened);
         Assert.Equal(opened, disposed);
     }
+    /// <summary>
+    /// A source that faults or is cancelled cannot complete a partial result and releases its resources.
+    /// </summary>
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public async Task SourceFailureDisposesEnumerationAndAllowsNextRequest(bool cancel)
+    {
+        var entered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        var disposed = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        int enumerations = 0;
+        async IAsyncEnumerable<ReadOnlyMemory<char>> Read([EnumeratorCancellation] CancellationToken token)
+        {
+            bool first = Interlocked.Increment(ref enumerations) == 1;
+            try
+            {
+                yield return "complete".AsMemory();
+                if (first)
+                {
+                    entered.TrySetResult();
+                    if (cancel) await Task.Delay(Timeout.Infinite, token);
+                    throw new IOException("Synthetic source failure after partial output.");
+                }
+            }
+            finally { if (first) disposed.TrySetResult(); }
+        }
+        Builder.Services.AddMcpServer().WithHttpTransport(o => o.Stateless = true)
+            .WithTools([McpServerTool.Create(() => new CallToolResult { Content = [new StreamingTextContentBlock(Read)] }, new() { Name = "stream" })]);
+        await using var app = Builder.Build();
+        app.MapMcp();
+        await app.StartAsync(TestContext.Current.CancellationToken);
+        await using var client = await McpClient.CreateAsync(new HttpClientTransport(new() { Endpoint = HttpClient.BaseAddress! }, HttpClient), cancellationToken: TestContext.Current.CancellationToken);
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
+        var request = client.CallToolAsync("stream", cancellationToken: cancellation.Token).AsTask();
+        await entered.Task.WaitAsync(TimeSpan.FromSeconds(10), TestContext.Current.CancellationToken);
+        if (cancel) cancellation.Cancel();
+        var error = await Assert.ThrowsAnyAsync<Exception>(() => request.WaitAsync(TimeSpan.FromSeconds(10), TestContext.Current.CancellationToken));
+        Assert.IsNotType<TimeoutException>(error);
+        await disposed.Task.WaitAsync(TimeSpan.FromSeconds(10), TestContext.Current.CancellationToken);
+        var result = await client.CallToolAsync("stream", cancellationToken: TestContext.Current.CancellationToken);
+        Assert.Equal("complete", Assert.IsType<TextContentBlock>(Assert.Single(result.Content)).Text);
+        Assert.Equal(2, enumerations);
+    }
+
 }
 #endif

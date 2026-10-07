@@ -16,7 +16,8 @@ internal sealed partial class StreamableHttpPostTransport(
     Stream responseStream,
     CancellationToken sessionCancellationToken,
     ILogger logger,
-    Func<JsonRpcMessage?, ValueTask>? onResponseStarting = null) : ITransport
+    Func<JsonRpcMessage?, ValueTask>? onResponseStarting = null,
+    CancellationToken responseCancellationToken = default) : ITransport
 {
     private readonly SemaphoreSlim _messageLock = new(1, 1);
     private readonly TaskCompletionSource<bool> _httpResponseTcs = new(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -164,8 +165,11 @@ internal sealed partial class StreamableHttpPostTransport(
 
                 try
                 {
+                    // A source can wait without attempting another write. HTTP disconnect must
+                    // cancel that wait before disposal attempts to acquire the same message lock.
+                    using var responseCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken, responseCancellationToken);
                     await NotifyResponseStartingAsync(message).ConfigureAwait(false);
-                    await _httpSseWriter.WriteAsync(item, cancellationToken).ConfigureAwait(false);
+                    await _httpSseWriter.WriteAsync(item, responseCancellation.Token).ConfigureAwait(false);
                 }
                 catch (Exception ex) when (!cancellationToken.IsCancellationRequested)
                 {

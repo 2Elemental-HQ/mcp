@@ -12,6 +12,45 @@ namespace ModelContextProtocol.Tests.Protocol;
 public sealed class BoundedTextSerializationTests
 {
     /// <summary>
+    /// Literal UTF-8 scalars and escaped surrogate pairs survive bounded decoder token boundaries.
+    /// </summary>
+    [Theory]
+    [InlineData(4093)]
+    [InlineData(4094)]
+    [InlineData(4095)]
+    [InlineData(4096)]
+    public void MixedLiteralAndEscapedUnicodeMatchesFramework(int prefixLength)
+    {
+        var text = string.Concat(new string('x', prefixLength), "😀é\n\t", new string('y', 8192), "😀");
+        var quoted = JsonSerializer.Serialize(text, new JsonSerializerOptions { Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping });
+        var json = string.Concat("{\"type\":\"text\",\"text\":", quoted, "}");
+        Assert.Equal(text, Assert.IsType<TextContentBlock>(JsonSerializer.Deserialize<ContentBlock>(json, McpJsonUtilities.DefaultOptions)).Text);
+    }
+
+    /// <summary>
+    /// Chunking never turns invalid escaped Unicode into an accepted tool result.
+    /// </summary>
+    [Theory]
+    [InlineData("\\uD800")]
+    [InlineData("\\uDC00")]
+    [InlineData("\\uD800\\u0041")]
+    public void InvalidSurrogateEscapesAreRejected(string invalid)
+    {
+        var json = string.Concat("{\"type\":\"text\",\"text\":\"", new string('x', 4093), invalid, "\"}");
+        Assert.ThrowsAny<Exception>(() => JsonSerializer.Deserialize<ContentBlock>(json, McpJsonUtilities.DefaultOptions));
+    }
+
+    /// <summary>
+    /// A caller-supplied null retains the existing serializer contract despite the nonnullable API.
+    /// </summary>
+    [Fact]
+    public void NullTextKeepsExistingWireValue()
+    {
+        ContentBlock block = new TextContentBlock { Text = null! };
+        Assert.Equal("{\"type\":\"text\",\"text\":null}", JsonSerializer.Serialize(block, McpJsonUtilities.DefaultOptions));
+    }
+
+    /// <summary>
     /// Splitting a string into writer segments preserves its JSON bytes and decoded content.
     /// </summary>
     [Theory]
