@@ -14,6 +14,36 @@ namespace ModelContextProtocol.AspNetCore.Tests;
 public sealed class BoundedSseSerializationTests(ITestOutputHelper output) : KestrelInMemoryTest(output)
 {
     /// <summary>
+    /// Parsed multiline JSON nodes preserve their content when written as one SSE response.
+    /// </summary>
+    [Theory]
+    [InlineData("\n")]
+    [InlineData("\r")]
+    [InlineData("\r\n")]
+    public async Task MultilineJsonNodesRoundTrip(string newline)
+    {
+        Builder.Services.AddMcpServer().WithHttpTransport(o => o.Stateless = true)
+            .WithTools([McpServerTool.Create(() => new CallToolResult { Content = [new TextContentBlock { Text = "complete" }] }, new() { Name = "raw" })])
+            .WithMessageFilters(filters => filters.AddOutgoingFilter(next => async (context, token) =>
+            {
+                if (context.JsonRpcMessage is JsonRpcResponse response && response.Result is System.Text.Json.Nodes.JsonObject result && result.ContainsKey("content"))
+                {
+                    var meta = result["_meta"] as System.Text.Json.Nodes.JsonObject;
+                    if (meta is null) result["_meta"] = meta = new System.Text.Json.Nodes.JsonObject();
+                    meta["extension"] = System.Text.Json.Nodes.JsonNode.Parse(string.Concat("{", newline, "\"value\":42", newline, "}"));
+                }
+                await next(context, token);
+            }));
+        await using var app = Builder.Build();
+        app.MapMcp();
+        await app.StartAsync(TestContext.Current.CancellationToken);
+        await using var client = await McpClient.CreateAsync(new HttpClientTransport(new() { Endpoint = HttpClient.BaseAddress! }, HttpClient), cancellationToken: TestContext.Current.CancellationToken);
+        var result = await client.CallToolAsync("raw", cancellationToken: TestContext.Current.CancellationToken);
+        Assert.Equal("complete", Assert.IsType<TextContentBlock>(Assert.Single(result.Content)).Text);
+        Assert.Equal(42, result.Meta!["extension"]!["value"]!.GetValue<int>());
+    }
+
+    /// <summary>
     /// Large text uses bounded asynchronous writes and survives both node observation and ordinary filters.
     /// </summary>
     [Theory]

@@ -53,7 +53,11 @@ public sealed class SegmentedSseParserTests
     /// </summary>
     private sealed class FragmentedStream(byte[] bytes, int fragmentSize) : MemoryStream(bytes)
     {
+#if NET
         public override ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default) =>
             base.ReadAsync(buffer.Slice(0, Math.Min(fragmentSize, buffer.Length)), cancellationToken);
+#endif
+        public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken) =>
+            base.ReadAsync(buffer, offset, Math.Min(fragmentSize, count), cancellationToken);
     }
 }
