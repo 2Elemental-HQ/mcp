@@ -1,0 +1,30 @@
+name: Targeted OAuth diagnostic
+on:
+  pull_request:
+    paths:
+      - .github/workflows/oauth-probe.yml
+      - .github/probes/probe-oauth.py
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          dotnet-version: |
+            10.0.401
+            9.0.318
+      - name: Compare original assertions and controlled token delays
+        run: python3 .github/probes/probe-oauth.py "$RUNNER_TEMP/oauth-evidence"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: oauth-diagnostic
+          path: ${{ runner.temp }}/oauth-evidence
+          retention-days: 7
