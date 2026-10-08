@@ -1,0 +1,22 @@
+{
+  "tests/ModelContextProtocol.AspNetCore.Tests/OAuth/AuthTests.cs": {
+    "3338e88e15c42cfc27465143c140d7d10f1a2707": "693c779432eea6ba3d1ea69f11afbcb53dfc3fe3",
+    "c04230cd11f8e73986c426da8c7c4e043348d371": "693c779432eea6ba3d1ea69f11afbcb53dfc3fe3",
+    "3b73488db97e034ab9c9b3bacf37235a44e28e07": "693c779432eea6ba3d1ea69f11afbcb53dfc3fe3"
+  },
+  "src/ModelContextProtocol.Core/Authentication/ClientOAuthProvider.cs": {
+    "3338e88e15c42cfc27465143c140d7d10f1a2707": "785e3cc2ef8d2b66d66ed272538e8213b04e9583",
+    "c04230cd11f8e73986c426da8c7c4e043348d371": "785e3cc2ef8d2b66d66ed272538e8213b04e9583",
+    "3b73488db97e034ab9c9b3bacf37235a44e28e07": "785e3cc2ef8d2b66d66ed272538e8213b04e9583"
+  },
+  "src/ModelContextProtocol.Core/Client/McpClientOptions.cs": {
+    "3338e88e15c42cfc27465143c140d7d10f1a2707": "61a0613df2bdc9643ef1e09a33d626f67c1ce47e",
+    "c04230cd11f8e73986c426da8c7c4e043348d371": "61a0613df2bdc9643ef1e09a33d626f67c1ce47e",
+    "3b73488db97e034ab9c9b3bacf37235a44e28e07": "61a0613df2bdc9643ef1e09a33d626f67c1ce47e"
+  },
+  "global.json": {
+    "3338e88e15c42cfc27465143c140d7d10f1a2707": "9e13a6187690d966007b30d6d5be1bc32a7acc81",
+    "c04230cd11f8e73986c426da8c7c4e043348d371": "9e13a6187690d966007b30d6d5be1bc32a7acc81",
+    "3b73488db97e034ab9c9b3bacf37235a44e28e07": "9e13a6187690d966007b30d6d5be1bc32a7acc81"
+  }
+}

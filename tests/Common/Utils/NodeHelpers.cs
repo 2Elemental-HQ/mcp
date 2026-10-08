@@ -75,6 +75,26 @@ public static class NodeHelpers
     }
 
     /// <summary>
+    /// Starts the lockfile-pinned official Everything server without a mutable external image.
+    /// </summary>
+    public static ProcessStartInfo EverythingServerStartInfo(int port)
+    {
+        EnsureNpmDependenciesInstalled();
+        var script = Path.Combine(FindRepoRoot(), "node_modules", "@modelcontextprotocol", "server-everything", "dist", "index.js");
+        var info = new ProcessStartInfo
+        {
+            FileName = "node",
+            Arguments = $"\"{script}\" sse",
+            UseShellExecute = false,
+            RedirectStandardOutput = true,
+            RedirectStandardError = true,
+            CreateNoWindow = true,
+        };
+        info.EnvironmentVariables["PORT"] = port.ToString(System.Globalization.CultureInfo.InvariantCulture);
+        return info;
+    }
+
+    /// <summary>
     /// Creates a ProcessStartInfo configured to run a binary from node_modules/.bin/conformance.
     /// Calls <see cref="EnsureNpmDependenciesInstalled"/> first.
     /// </summary>

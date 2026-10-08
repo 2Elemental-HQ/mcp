@@ -325,7 +325,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
                         {
                             if (_logger.IsEnabled(LogLevel.Trace))
                             {
-                                LogMessageHandlerExceptionSensitive(EndpointName, message.GetType().Name, JsonSerializer.Serialize(message, McpJsonUtilities.JsonContext.Default.JsonRpcMessage), ex);
+                                LogMessageHandlerExceptionSensitive(EndpointName, message.GetType().Name, message.ToDiagnosticString(), ex);
                             }
                             else
                             {
@@ -447,7 +447,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
         }
     }
 
-    private async Task<JsonNode?> HandleMessageCoreAsync(JsonRpcMessage message, CancellationToken cancellationToken)
+    private async Task<JsonRpcResponse?> HandleMessageCoreAsync(JsonRpcMessage message, CancellationToken cancellationToken)
     {
         switch (message)
         {
@@ -516,7 +516,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
         }
     }
 
-    private async Task<JsonNode?> HandleRequestAsync(JsonRpcRequest request, CancellationToken cancellationToken)
+    private async Task<JsonRpcResponse> HandleRequestAsync(JsonRpcRequest request, CancellationToken cancellationToken)
     {
         if (!_requestHandlers.TryGetValue(request.Method, out var handler))
         {
@@ -524,14 +524,11 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
             throw new McpProtocolException($"Method '{request.Method}' is not available.", McpErrorCode.MethodNotFound);
         }
 
-        JsonNode? result = await handler(request, cancellationToken).ConfigureAwait(false);
+        var result = await handler(request, cancellationToken).ConfigureAwait(false);
 
-        await SendMessageAsync(new JsonRpcResponse
-        {
-            Id = request.Id,
-            Result = result,
-            Context = request.Context,
-        }, cancellationToken).ConfigureAwait(false);
+        result.Id = request.Id;
+        result.Context = request.Context;
+        await SendMessageAsync(result, cancellationToken).ConfigureAwait(false);
 
         return result;
     }
@@ -706,7 +703,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
             {
                 if (addTags)
                 {
-                    AddResponseTags(ref tags, activity, success.Result, method);
+                    AddResponseTags(ref tags, activity, success, method);
                 }
 
                 if (_logger.IsEnabled(LogLevel.Trace))
@@ -809,7 +806,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
             {
                 if (_logger.IsEnabled(LogLevel.Trace))
                 {
-                    LogSendingRequestSensitive(EndpointName, request.Method, JsonSerializer.Serialize(msg, McpJsonUtilities.JsonContext.Default.JsonRpcMessage));
+                    LogSendingRequestSensitive(EndpointName, request.Method, msg.ToDiagnosticString());
                 }
                 else
                 {
@@ -820,7 +817,7 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
             {
                 if (_logger.IsEnabled(LogLevel.Trace))
                 {
-                    LogSendingMessageSensitive(EndpointName, JsonSerializer.Serialize(msg, McpJsonUtilities.JsonContext.Default.JsonRpcMessage));
+                    LogSendingMessageSensitive(EndpointName, msg.ToDiagnosticString());
                 }
                 else
                 {
@@ -974,9 +971,16 @@ internal sealed partial class McpSessionHandler : IAsyncDisposable
         }
     }
 
-    private static void AddResponseTags(ref TagList tags, Activity? activity, JsonNode? response, string method)
+    private static void AddResponseTags(ref TagList tags, Activity? activity, JsonRpcResponse? response, string method)
     {
-        if (response is JsonObject jsonObject
+        if (response is { HasStreamingText: true, HasError: true })
+        {
+            // Diagnostics must not open a streaming source independently of its transport.
+            activity?.SetStatus(ActivityStatusCode.Error, "Streaming tool error content omitted.");
+            tags.Add("error.type", method == RequestMethods.ToolsCall ? "tool_error" : "_OTHER");
+            return;
+        }
+        if (response?.HasError == true && response.Result is JsonObject jsonObject
             && jsonObject.TryGetPropertyValue("isError", out var isError)
             && isError?.GetValueKind() == JsonValueKind.True)
         {

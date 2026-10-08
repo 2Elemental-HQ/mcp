@@ -1,4 +1,4 @@
-using System.Text.Json.Nodes;
+using ModelContextProtocol.Protocol;
 
 namespace ModelContextProtocol.Server;
 
@@ -11,7 +11,7 @@ internal sealed class MrtrContinuation
 {
     private readonly CancellationTokenSource _handlerCts;
 
-    public MrtrContinuation(CancellationTokenSource handlerCts, Task<JsonNode?> handlerTask, MrtrContext mrtrContext)
+    public MrtrContinuation(CancellationTokenSource handlerCts, Task<JsonRpcResponse> handlerTask, MrtrContext mrtrContext)
     {
         _handlerCts = handlerCts;
         HandlerTask = handlerTask;
@@ -27,7 +27,7 @@ internal sealed class MrtrContinuation
     /// <summary>
     /// The handler task that is suspended awaiting input.
     /// </summary>
-    public Task<JsonNode?> HandlerTask { get; }
+    public Task<JsonRpcResponse> HandlerTask { get; }
 
     /// <summary>
     /// The MRTR context for the handler's async flow.

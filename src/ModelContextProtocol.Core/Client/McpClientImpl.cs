@@ -694,9 +694,7 @@ internal sealed partial class McpClientImpl : McpClient
             JsonRpcResponse response = await _sessionHandler.SendRequestAsync(request, cancellationToken).ConfigureAwait(false);
 
             // Check if the result is an InputRequiredResult by looking at result_type.
-            if (response.Result is JsonObject resultObj &&
-                resultObj.TryGetPropertyValue("resultType", out var resultTypeNode) &&
-                resultTypeNode?.GetValue<string>() is "input_required")
+            if (response.IsInputRequired)
             {
                 WarnIfInputRequiredResultOnNonMrtrSession(request.Method);
 

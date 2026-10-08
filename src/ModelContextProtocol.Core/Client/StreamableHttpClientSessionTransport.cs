@@ -8,6 +8,8 @@ using System.Text.Json.Nodes;
 using ModelContextProtocol.Protocol;
 using System.Threading.Channels;
 using System.Net;
+using System.Text;
+using System.Buffers;
 
 namespace ModelContextProtocol.Client;
 
@@ -450,7 +452,7 @@ internal sealed partial class StreamableHttpClientSessionTransport : TransportBa
     {
         try
         {
-            await foreach (SseItem<string> sseEvent in SseParser.Create(responseStream).EnumerateAsync(cancellationToken).ConfigureAwait(false))
+            await foreach (SseItem<JsonRpcMessage?> sseEvent in new SegmentedSseParser<JsonRpcMessage?>(responseStream, ParseSseMessage).EnumerateAsync(cancellationToken).ConfigureAwait(false))
             {
                 // Track event ID and retry interval for resumability
                 if (!string.IsNullOrEmpty(sseEvent.EventId))
@@ -463,7 +465,7 @@ internal sealed partial class StreamableHttpClientSessionTransport : TransportBa
                 }
 
                 // Skip events with empty data
-                if (string.IsNullOrEmpty(sseEvent.Data))
+                if (sseEvent.Data is null)
                 {
                     continue;
                 }
@@ -483,6 +485,31 @@ internal sealed partial class StreamableHttpClientSessionTransport : TransportBa
 
         state.StreamEndedTimestamp = Stopwatch.GetTimestamp();
         return default;
+    }
+
+    private JsonRpcMessage? ParseSseMessage(string eventType, ReadOnlySequence<byte> data)
+    {
+        if (data.IsEmpty) return null;
+        string? text = _logger.IsEnabled(LogLevel.Trace) ? Encoding.UTF8.GetString(data.ToArray()) : null;
+        if (text is not null) LogTransportReceivedMessageSensitive(Name, text);
+        try
+        {
+            var message = JsonRpcMessage.Converter.ReadMessage(data, McpJsonUtilities.DefaultOptions);
+            if (message is null && text is not null) LogTransportMessageParseUnexpectedTypeSensitive(Name, text);
+            return message;
+        }
+        catch (JsonException error)
+        {
+            LogJsonException(error, text ?? string.Empty);
+            return null;
+        }
+    }
+
+    private async Task<JsonRpcMessageWithId?> ProcessMessageAsync(JsonRpcMessage message, JsonRpcRequest? relatedRpcRequest, CancellationToken cancellationToken)
+    {
+        await WriteMessageAsync(message, cancellationToken).ConfigureAwait(false);
+        return message is JsonRpcResponse or JsonRpcError && message is JsonRpcMessageWithId response && response.Id == relatedRpcRequest?.Id
+            ? response : null;
     }
 
     private async Task<JsonRpcMessageWithId?> ProcessMessageAsync(string data, JsonRpcRequest? relatedRpcRequest, CancellationToken cancellationToken)

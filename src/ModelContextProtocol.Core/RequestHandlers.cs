@@ -5,7 +5,7 @@ using System.Text.Json.Serialization.Metadata;
 
 namespace ModelContextProtocol;
 
-internal sealed class RequestHandlers : Dictionary<string, Func<JsonRpcRequest, CancellationToken, Task<JsonNode?>>>
+internal sealed class RequestHandlers : Dictionary<string, Func<JsonRpcRequest, CancellationToken, Task<JsonRpcResponse>>>
 {
     /// <summary>
     /// Registers a handler for incoming requests of a specific method in the MCP protocol.
@@ -41,8 +41,8 @@ internal sealed class RequestHandlers : Dictionary<string, Func<JsonRpcRequest, 
         this[method] = async (request, cancellationToken) =>
         {
             TParams typedRequest = JsonSerializer.Deserialize(request.Params, requestTypeInfo)!;
-            object? result = await handler(typedRequest, request, cancellationToken).ConfigureAwait(false);
-            return JsonSerializer.SerializeToNode(result, responseTypeInfo);
+            TResult result = await handler(typedRequest, request, cancellationToken).ConfigureAwait(false);
+            return JsonRpcResponse.Create(result, responseTypeInfo);
         };
     }
 
@@ -70,10 +70,10 @@ internal sealed class RequestHandlers : Dictionary<string, Func<JsonRpcRequest, 
 
             if (augmented.IsAlternate)
             {
-                return JsonSerializer.SerializeToNode(augmented.Alternate!, augmented.AlternateTypeInfo!);
+                return JsonRpcResponse.Create(augmented.Alternate!, augmented.AlternateTypeInfo!);
             }
 
-            return JsonSerializer.SerializeToNode(augmented.Result!, responseTypeInfo);
+            return JsonRpcResponse.Create(augmented.Result!, responseTypeInfo);
         };
     }
 #pragma warning restore MCPEXP002

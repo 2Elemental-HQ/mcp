@@ -1,0 +1,1850 @@
+{
+  "upstream": "3338e88e15c42cfc27465143c140d7d10f1a2707",
+  "candidate": "2142bb821b142dd31d9ceaac77e3a1304d259a4f",
+  "scope": "Separate diagnostic host with synthetic text about 8.45 million UTF-16 characters. These are not timing or heap-peak measurements from the public reproduction. Pool event allocations include >=16 KiB; other pool events include >=1 MiB. Heap -live root traversal has a thread-static limitation; do not treat it as exact retained size. Retained profiles explicitly collect at phase boundaries, never per request.",
+  "profiles": [
+    {
+      "Profile": "fork-final-stream-repeat",
+      "Role": "server",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 3
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 6636397,
+      "SosReportedLiveBytes": 2242040,
+      "TypeStatistics": [
+        {
+          "Count": 84,
+          "Bytes": 812242,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 10781,
+          "Bytes": 1256772,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1733,
+          "Bytes": 1775429,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 15,
+          "Bytes": 69252,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1351,
+          "Bytes": 129094,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1357,
+          "Bytes": 891848,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 27,
+          "Bytes": 787080,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 8,
+          "Bytes": 442560,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-final-stream-repeat",
+      "Role": "client",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 65536,
+          "Count": 2
+        }
+      ],
+      "HeapAllObjectsBytes": 300527299,
+      "SosReportedLiveBytes": 1581881,
+      "TypeStatistics": [
+        {
+          "Count": 51,
+          "Bytes": 509492,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1517,
+          "Bytes": 64311071,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 67455,
+          "Bytes": 124496056,
+          "Type": "System.String"
+        },
+        {
+          "Count": 10,
+          "Bytes": 3256,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1219,
+          "Bytes": 127556,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1241,
+          "Bytes": 718305,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 18,
+          "Bytes": 63574661,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 5,
+          "Bytes": 409720,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-final-stream-single",
+      "Role": "server",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 2
+        }
+      ],
+      "HeapAllObjectsBytes": 4676063,
+      "SosReportedLiveBytes": 1392377,
+      "TypeStatistics": [
+        {
+          "Count": 1452,
+          "Bytes": 291817,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 42,
+          "Bytes": 507566,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 11942,
+          "Bytes": 1477322,
+          "Type": "System.String"
+        },
+        {
+          "Count": 15,
+          "Bytes": 69252,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1224,
+          "Bytes": 124788,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1154,
+          "Bytes": 141379,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 5,
+          "Bytes": 114808,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 6,
+          "Bytes": 475280,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-final-stream-single",
+      "Role": "client",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 2
+        }
+      ],
+      "HeapAllObjectsBytes": 44894283,
+      "SosReportedLiveBytes": 1465900,
+      "TypeStatistics": [
+        {
+          "Count": 29,
+          "Bytes": 521088,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1254,
+          "Bytes": 9851816,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 34074,
+          "Bytes": 21644140,
+          "Type": "System.String"
+        },
+        {
+          "Count": 10,
+          "Bytes": 3256,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1201,
+          "Bytes": 126506,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1208,
+          "Bytes": 643438,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 7,
+          "Bytes": 9227109,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 4,
+          "Bytes": 475232,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-final-string-repeat",
+      "Role": "server",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 11
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 8
+        }
+      ],
+      "HeapAllObjectsBytes": 413146141,
+      "SosReportedLiveBytes": 2389413,
+      "TypeStatistics": [
+        {
+          "Count": 5060,
+          "Bytes": 14512936,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 10453,
+          "Bytes": 171450854,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 189701,
+          "Bytes": 177808608,
+          "Type": "System.String"
+        },
+        {
+          "Count": 16,
+          "Bytes": 36508,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1338,
+          "Bytes": 128270,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1410,
+          "Bytes": 1086437,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 23,
+          "Bytes": 442920,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 10339,
+          "Bytes": 170920264,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-final-string-repeat",
+      "Role": "client",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 4
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 65536,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 305884390,
+      "SosReportedLiveBytes": 1518961,
+      "TypeStatistics": [
+        {
+          "Count": 54,
+          "Bytes": 665308,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1599,
+          "Bytes": 91522312,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 138729,
+          "Bytes": 183350194,
+          "Type": "System.String"
+        },
+        {
+          "Count": 10,
+          "Bytes": 3256,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1218,
+          "Bytes": 127524,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1240,
+          "Bytes": 685513,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 25,
+          "Bytes": 90699984,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 6,
+          "Bytes": 540816,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-final-string-single",
+      "Role": "server",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 44754129,
+      "SosReportedLiveBytes": 1475695,
+      "TypeStatistics": [
+        {
+          "Count": 1546,
+          "Bytes": 450516,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 1096,
+          "Bytes": 17586184,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 31130,
+          "Bytes": 19325504,
+          "Type": "System.String"
+        },
+        {
+          "Count": 15,
+          "Bytes": 69252,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1222,
+          "Bytes": 124682,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1167,
+          "Bytes": 218235,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 6,
+          "Bytes": 163984,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 1035,
+          "Bytes": 17441032,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-final-string-single",
+      "Role": "client",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 45953911,
+      "SosReportedLiveBytes": 1432420,
+      "TypeStatistics": [
+        {
+          "Count": 36,
+          "Bytes": 619176,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1274,
+          "Bytes": 9853519,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 39289,
+          "Bytes": 22396928,
+          "Type": "System.String"
+        },
+        {
+          "Count": 10,
+          "Bytes": 3256,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1201,
+          "Bytes": 126506,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1207,
+          "Bytes": 610646,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 8,
+          "Bytes": 9227133,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 4,
+          "Bytes": 540768,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-retained-final-stream",
+      "Role": "server",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 5292753,
+      "SosReportedLiveBytes": 2139104,
+      "TypeStatistics": [
+        {
+          "Count": 47,
+          "Bytes": 420168,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1672,
+          "Bytes": 987836,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 10443,
+          "Bytes": 1236522,
+          "Type": "System.String"
+        },
+        {
+          "Count": 14,
+          "Bytes": 3692,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1357,
+          "Bytes": 129478,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1353,
+          "Bytes": 843112,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 5,
+          "Bytes": 98424,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 7,
+          "Bytes": 377000,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-retained-final-stream",
+      "Role": "client",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 65536,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 37341515,
+      "SosReportedLiveBytes": 1417311,
+      "TypeStatistics": [
+        {
+          "Count": 42,
+          "Bytes": 425274,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1417,
+          "Bytes": 10076491,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 35141,
+          "Bytes": 21949728,
+          "Type": "System.String"
+        },
+        {
+          "Count": 10,
+          "Bytes": 3256,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1110,
+          "Bytes": 122580,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1100,
+          "Bytes": 679899,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 11,
+          "Bytes": 9327052,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 4,
+          "Bytes": 344160,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-retained-final-string",
+      "Role": "server",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 12
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 10
+        }
+      ],
+      "HeapAllObjectsBytes": 49325444,
+      "SosReportedLiveBytes": 2344989,
+      "TypeStatistics": [
+        {
+          "Count": 1897,
+          "Bytes": 2090489,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 115,
+          "Bytes": 3231866,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 36420,
+          "Bytes": 4742046,
+          "Type": "System.String"
+        },
+        {
+          "Count": 15,
+          "Bytes": 20100,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1338,
+          "Bytes": 128270,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1403,
+          "Bytes": 1063229,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 28,
+          "Bytes": 721568,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 43,
+          "Bytes": 3032072,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-retained-final-string",
+      "Role": "client",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 4
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 32768,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 65536,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 51391543,
+      "SosReportedLiveBytes": 1522505,
+      "TypeStatistics": [
+        {
+          "Count": 55,
+          "Bytes": 876274,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1459,
+          "Bytes": 10309731,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 90190,
+          "Bytes": 29494602,
+          "Type": "System.String"
+        },
+        {
+          "Count": 10,
+          "Bytes": 3256,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1218,
+          "Bytes": 127524,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1240,
+          "Bytes": 685513,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 17,
+          "Bytes": 9492412,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 6,
+          "Bytes": 737424,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": []
+    },
+    {
+      "Profile": "fork-retained-upstream-single",
+      "Role": "server",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16777216,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 67108864,
+          "Count": 2
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 16777216,
+          "Count": 4
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 67108864,
+          "Count": 2
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 16777216,
+          "Count": 4
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 67108864,
+          "Count": 2
+        }
+      ],
+      "HeapAllObjectsBytes": 309025902,
+      "SosReportedLiveBytes": 27419159,
+      "TypeStatistics": [
+        {
+          "Count": 11150,
+          "Bytes": 1346790,
+          "Type": "System.String"
+        },
+        {
+          "Count": 43,
+          "Bytes": 135186408,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 3660,
+          "Bytes": 143690401,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 14,
+          "Bytes": 3692,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1225,
+          "Bytes": 124786,
+          "Type": "System.String"
+        },
+        {
+          "Count": 3351,
+          "Bytes": 25945207,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 10,
+          "Bytes": 134496496,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 5,
+          "Bytes": 135151736,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": [
+        {
+          "Elements": 67108864,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapePropertyOrValue(ReadOnlySpan`1 propertyName, ReadOnlySpan`1 value, Int32 firstEscapeIndexProp, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.Utf8JsonWriter.WriteString(ReadOnlySpan`1 propertyName, ReadOnlySpan`1 value)",
+            "at ModelContextProtocol.Protocol.ContentBlock.Converter.Write(Utf8JsonWriter writer, ContentBlock value, JsonSerializerOptions options):line 317",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)",
+            "at System.Text.Json.JsonSerializer.Serialize[TValue](Utf8JsonWriter writer, TValue value, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.McpJsonUtilities.JsonContext.IListContentBlockSerializeHandler(Utf8JsonWriter writer, IList`1 value):line 59",
+            "at ModelContextProtocol.McpJsonUtilities.JsonContext.CallToolResultSerializeHandler(Utf8JsonWriter writer, CallToolResult value):line 174",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)"
+          ]
+        },
+        {
+          "Elements": 33554432,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ArrayBuffer.EnsureAvailableSpaceCore(Int32 byteCount)",
+            "at System.Text.Json.PooledByteBufferWriter.GetMemory(Int32 sizeHint)",
+            "at System.Text.Json.Utf8JsonWriter.Grow(Int32 requiredSize)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringMinimized(ReadOnlySpan`1 escapedPropertyName, ReadOnlySpan`1 escapedValue)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapePropertyOrValue(ReadOnlySpan`1 propertyName, ReadOnlySpan`1 value, Int32 firstEscapeIndexProp, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.Utf8JsonWriter.WriteString(ReadOnlySpan`1 propertyName, ReadOnlySpan`1 value)",
+            "at ModelContextProtocol.Protocol.ContentBlock.Converter.Write(Utf8JsonWriter writer, ContentBlock value, JsonSerializerOptions options):line 317",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)"
+          ]
+        },
+        {
+          "Elements": 16777216,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.JsonDocument.MetadataDb.CreateRented(Int32 payloadLength, Boolean convertToAlloc)",
+            "at System.Text.Json.JsonDocument.ParseUnrented(ReadOnlyMemory`1 utf8Json, JsonReaderOptions readerOptions, JsonTokenType tokenType, Boolean allowDuplicateProperties)",
+            "at System.Text.Json.JsonDocument.ParseValue(ReadOnlySpan`1 utf8Json, JsonDocumentOptions options)",
+            "at System.Text.Json.JsonSerializer.WriteNode[TValue](TValue& value, JsonTypeInfo`1 jsonTypeInfo)",
+            "at System.Text.Json.JsonSerializer.SerializeToNode[TValue](TValue value, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.RequestHandlers.<>c__DisplayClass1_0`2.<<SetWithAlternate>b__0>d.MoveNext():line 76",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)",
+            "at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext()"
+          ]
+        },
+        {
+          "Elements": 67108864,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapeValue(ReadOnlySpan`1 utf8Value, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.JsonDocument.WriteComplexElement(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.JsonDocument.WriteElementTo(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.Nodes.JsonArray.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Nodes.JsonObject.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)",
+            "at System.Text.Json.JsonSerializer.Serialize[TValue](Utf8JsonWriter writer, TValue value, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.McpJsonUtilities.JsonContext.JsonRpcResponseSerializeHandler(Utf8JsonWriter writer, JsonRpcResponse value):line 155"
+          ]
+        },
+        {
+          "Elements": 16777216,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.ArrayBuffer.EnsureAvailableSpaceCore(Int32 byteCount):line 165",
+            "at System.Net.ServerSentEvents.PooledByteBufferWriter.GetMemory(Int32 sizeHint):line 20",
+            "at System.Text.Json.Utf8JsonWriter.Grow(Int32 requiredSize)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringMinimized(ReadOnlySpan`1 escapedValue)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapeValue(ReadOnlySpan`1 utf8Value, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.JsonDocument.WriteComplexElement(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.JsonDocument.WriteElementTo(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.Nodes.JsonArray.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Nodes.JsonObject.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)"
+          ]
+        }
+      ]
+    },
+    {
+      "Profile": "fork-retained-upstream-single",
+      "Role": "client",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 65536,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 131072,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 262144,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 524288,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 1048576,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 2097152,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 4194304,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 8388608,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16777216,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 67108864,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 1048576,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 2097152,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 4194304,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 8388608,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 16777216,
+          "Count": 5
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 67108864,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 1048576,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 2097152,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 4194304,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 8388608,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 16777216,
+          "Count": 5
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 67108864,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 189281681,
+      "SosReportedLiveBytes": 17551463,
+      "TypeStatistics": [
+        {
+          "Count": 26,
+          "Bytes": 506756,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 42940,
+          "Bytes": 22853094,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1303,
+          "Bytes": 160206418,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 10,
+          "Bytes": 3266,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1091,
+          "Bytes": 121498,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1022,
+          "Bytes": 16891531,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 19,
+          "Bytes": 160091269,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 4,
+          "Bytes": 475232,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": [
+        {
+          "Elements": 1048576,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 2097152,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 4194304,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 8388608,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 16777216,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 33554432,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 json, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessMessageAsync(String data, JsonRpcRequest relatedRpcRequest, CancellationToken cancellationToken):line 494",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessMessageAsync(String data, JsonRpcRequest relatedRpcRequest, CancellationToken cancellationToken)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 471",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.SendHttpRequestAsync(JsonRpcMessage message, CancellationToken cancellationToken):line 200",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)",
+            "at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)"
+          ]
+        },
+        {
+          "Elements": 16777216,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.JsonDocument.MetadataDb.CreateRented(Int32 payloadLength, Boolean convertToAlloc)",
+            "at System.Text.Json.JsonDocument.ParseUnrented(ReadOnlyMemory`1 utf8Json, JsonReaderOptions readerOptions, JsonTokenType tokenType, Boolean allowDuplicateProperties)",
+            "at System.Text.Json.JsonDocument.TryParseValue(Utf8JsonReader& reader, JsonDocument& document, Boolean shouldThrow, Boolean useArrayPools, Boolean allowDuplicateProperties)",
+            "at System.Text.Json.Serialization.Converters.JsonObjectConverter.ReadAsJsonElement(Utf8JsonReader& reader, JsonNodeOptions options)",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)",
+            "at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Utf8JsonReader& reader, ReadStack& state)",
+            "at System.Text.Json.JsonSerializer.Read[TValue](Utf8JsonReader& reader, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.Protocol.JsonRpcMessage.Converter.Read(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options):line 138",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)"
+          ]
+        },
+        {
+          "Elements": 67108864,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapeValue(ReadOnlySpan`1 utf8Value, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.JsonDocument.WriteComplexElement(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.JsonDocument.WriteElementTo(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.Nodes.JsonArray.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Nodes.JsonObject.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.JsonSerializer.ReadFromNode[TValue](JsonNode node, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.McpSession.SendRequestAsync[TParameters,TResult](String method, TParameters parameters, JsonTypeInfo`1 parametersTypeInfo, JsonTypeInfo`1 resultTypeInfo, RequestId requestId, CancellationToken cancellationToken):line 76",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)",
+            "at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)"
+          ]
+        }
+      ]
+    },
+    {
+      "Profile": "fork-upstream-single",
+      "Role": "server",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16777216,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 67108864,
+          "Count": 2
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 16777216,
+          "Count": 4
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 67108864,
+          "Count": 2
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 16777216,
+          "Count": 4
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 67108864,
+          "Count": 2
+        }
+      ],
+      "HeapAllObjectsBytes": 328091739,
+      "SosReportedLiveBytes": 27419663,
+      "TypeStatistics": [
+        {
+          "Count": 13987,
+          "Bytes": 18635078,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1081,
+          "Bytes": 152197084,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 3681,
+          "Bytes": 152753526,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 14,
+          "Bytes": 3692,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1225,
+          "Bytes": 124786,
+          "Type": "System.String"
+        },
+        {
+          "Count": 3351,
+          "Bytes": 25945207,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 12,
+          "Bytes": 143543162,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 1036,
+          "Bytes": 152117536,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": [
+        {
+          "Elements": 67108864,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapePropertyOrValue(ReadOnlySpan`1 propertyName, ReadOnlySpan`1 value, Int32 firstEscapeIndexProp, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.Utf8JsonWriter.WriteString(ReadOnlySpan`1 propertyName, ReadOnlySpan`1 value)",
+            "at ModelContextProtocol.Protocol.ContentBlock.Converter.Write(Utf8JsonWriter writer, ContentBlock value, JsonSerializerOptions options):line 317",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)",
+            "at System.Text.Json.JsonSerializer.Serialize[TValue](Utf8JsonWriter writer, TValue value, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.McpJsonUtilities.JsonContext.IListContentBlockSerializeHandler(Utf8JsonWriter writer, IList`1 value):line 59",
+            "at ModelContextProtocol.McpJsonUtilities.JsonContext.CallToolResultSerializeHandler(Utf8JsonWriter writer, CallToolResult value):line 174",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)"
+          ]
+        },
+        {
+          "Elements": 33554432,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ArrayBuffer.EnsureAvailableSpaceCore(Int32 byteCount)",
+            "at System.Text.Json.PooledByteBufferWriter.GetMemory(Int32 sizeHint)",
+            "at System.Text.Json.Utf8JsonWriter.Grow(Int32 requiredSize)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringMinimized(ReadOnlySpan`1 escapedPropertyName, ReadOnlySpan`1 escapedValue)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapePropertyOrValue(ReadOnlySpan`1 propertyName, ReadOnlySpan`1 value, Int32 firstEscapeIndexProp, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.Utf8JsonWriter.WriteString(ReadOnlySpan`1 propertyName, ReadOnlySpan`1 value)",
+            "at ModelContextProtocol.Protocol.ContentBlock.Converter.Write(Utf8JsonWriter writer, ContentBlock value, JsonSerializerOptions options):line 317",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)"
+          ]
+        },
+        {
+          "Elements": 16777216,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.JsonDocument.MetadataDb.CreateRented(Int32 payloadLength, Boolean convertToAlloc)",
+            "at System.Text.Json.JsonDocument.ParseUnrented(ReadOnlyMemory`1 utf8Json, JsonReaderOptions readerOptions, JsonTokenType tokenType, Boolean allowDuplicateProperties)",
+            "at System.Text.Json.JsonDocument.ParseValue(ReadOnlySpan`1 utf8Json, JsonDocumentOptions options)",
+            "at System.Text.Json.JsonSerializer.WriteNode[TValue](TValue& value, JsonTypeInfo`1 jsonTypeInfo)",
+            "at System.Text.Json.JsonSerializer.SerializeToNode[TValue](TValue value, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.RequestHandlers.<>c__DisplayClass1_0`2.<<SetWithAlternate>b__0>d.MoveNext():line 76",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)",
+            "at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext()"
+          ]
+        },
+        {
+          "Elements": 67108864,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapeValue(ReadOnlySpan`1 utf8Value, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.JsonDocument.WriteComplexElement(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.JsonDocument.WriteElementTo(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.Nodes.JsonArray.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Nodes.JsonObject.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.JsonConverter`1.WriteCore(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Serialize(Utf8JsonWriter writer, T& rootValue, Object rootValueBoxed)",
+            "at System.Text.Json.JsonSerializer.Serialize[TValue](Utf8JsonWriter writer, TValue value, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.McpJsonUtilities.JsonContext.JsonRpcResponseSerializeHandler(Utf8JsonWriter writer, JsonRpcResponse value):line 155"
+          ]
+        },
+        {
+          "Elements": 16777216,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.ArrayBuffer.EnsureAvailableSpaceCore(Int32 byteCount):line 165",
+            "at System.Net.ServerSentEvents.PooledByteBufferWriter.GetMemory(Int32 sizeHint):line 20",
+            "at System.Text.Json.Utf8JsonWriter.Grow(Int32 requiredSize)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringMinimized(ReadOnlySpan`1 escapedValue)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapeValue(ReadOnlySpan`1 utf8Value, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.JsonDocument.WriteComplexElement(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.JsonDocument.WriteElementTo(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.Nodes.JsonArray.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Nodes.JsonObject.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryWrite(Utf8JsonWriter writer, T& value, JsonSerializerOptions options, WriteStack& state)"
+          ]
+        }
+      ]
+    },
+    {
+      "Profile": "fork-upstream-single",
+      "Role": "client",
+      "PoolEvents": [
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16384,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 65536,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 131072,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 262144,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 524288,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 1048576,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 2097152,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 4194304,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 8388608,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 16777216,
+          "Count": 2
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferAllocated",
+          "Elements": 67108864,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 1048576,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 2097152,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 4194304,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 8388608,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 16777216,
+          "Count": 5
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferRented",
+          "Elements": 67108864,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 1048576,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 2097152,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 4194304,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 8388608,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 16777216,
+          "Count": 5
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 33554432,
+          "Count": 1
+        },
+        {
+          "Event": "BufferReturned",
+          "Elements": 67108864,
+          "Count": 1
+        }
+      ],
+      "HeapAllObjectsBytes": 184336125,
+      "SosReportedLiveBytes": 17668470,
+      "TypeStatistics": [
+        {
+          "Count": 22,
+          "Bytes": 439010,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 25647,
+          "Bytes": 20387704,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1173,
+          "Bytes": 160153299,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 10,
+          "Bytes": 3266,
+          "Type": "System.Char[]"
+        },
+        {
+          "Count": 1200,
+          "Bytes": 126474,
+          "Type": "System.String"
+        },
+        {
+          "Count": 1146,
+          "Bytes": 16880030,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 17,
+          "Bytes": 160058453,
+          "Type": "System.Byte[]"
+        },
+        {
+          "Count": 3,
+          "Bytes": 409672,
+          "Type": "System.Char[]"
+        }
+      ],
+      "LargeAllocationStacks": [
+        {
+          "Elements": 1048576,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 2097152,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 4194304,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 8388608,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 16777216,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.GrowBuffer(Byte[]& buffer, Int32 minimumLength)",
+            "at System.Net.ServerSentEvents.SseParser`1.ShiftOrGrowLineBufferIfNecessary()",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.FillLineBufferAsync(CancellationToken cancellationToken)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+MoveNext()",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at System.Net.ServerSentEvents.SseParser`1.EnumerateAsync(CancellationToken cancellationToken)+System.Collections.Generic.IAsyncEnumerator<System.Net.ServerSentEvents.SseItem<T>>.MoveNextAsync()",
+            "at System.Runtime.CompilerServices.ConfiguredCancelableAsyncEnumerable`1.Enumerator.MoveNextAsync()",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 453"
+          ]
+        },
+        {
+          "Elements": 33554432,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.JsonSerializer.ReadFromSpan[TValue](ReadOnlySpan`1 json, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessMessageAsync(String data, JsonRpcRequest relatedRpcRequest, CancellationToken cancellationToken):line 494",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessMessageAsync(String data, JsonRpcRequest relatedRpcRequest, CancellationToken cancellationToken)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken):line 471",
+            "at System.Runtime.CompilerServices.AsyncMethodBuilderCore.Start[TStateMachine](TStateMachine& stateMachine)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.ProcessSseResponseAsync(Stream responseStream, JsonRpcRequest relatedRpcRequest, SseStreamState state, CancellationToken cancellationToken)",
+            "at ModelContextProtocol.Client.StreamableHttpClientSessionTransport.SendHttpRequestAsync(JsonRpcMessage message, CancellationToken cancellationToken):line 200",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)",
+            "at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)"
+          ]
+        },
+        {
+          "Elements": 16777216,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.JsonDocument.MetadataDb.CreateRented(Int32 payloadLength, Boolean convertToAlloc)",
+            "at System.Text.Json.JsonDocument.ParseUnrented(ReadOnlyMemory`1 utf8Json, JsonReaderOptions readerOptions, JsonTokenType tokenType, Boolean allowDuplicateProperties)",
+            "at System.Text.Json.JsonDocument.TryParseValue(Utf8JsonReader& reader, JsonDocument& document, Boolean shouldThrow, Boolean useArrayPools, Boolean allowDuplicateProperties)",
+            "at System.Text.Json.Serialization.Converters.JsonObjectConverter.ReadAsJsonElement(Utf8JsonReader& reader, JsonNodeOptions options)",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)",
+            "at System.Text.Json.Serialization.JsonConverter`1.ReadCore(Utf8JsonReader& reader, T& value, JsonSerializerOptions options, ReadStack& state)",
+            "at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.Deserialize(Utf8JsonReader& reader, ReadStack& state)",
+            "at System.Text.Json.JsonSerializer.Read[TValue](Utf8JsonReader& reader, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.Protocol.JsonRpcMessage.Converter.Read(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options):line 138",
+            "at System.Text.Json.Serialization.JsonConverter`1.TryRead(Utf8JsonReader& reader, Type typeToConvert, JsonSerializerOptions options, ReadStack& state, T& value, Boolean& isPopulatedValue)"
+          ]
+        },
+        {
+          "Elements": 67108864,
+          "Frames": [
+            "at System.Diagnostics.Tracing.EventSource.DispatchToAllListeners(EventWrittenEventArgs eventCallbackArgs)",
+            "at System.Diagnostics.Tracing.EventSource.WriteEventWithRelatedActivityIdCore(Int32 eventId, Guid* relatedActivityId, Int32 eventDataCount, EventData* data)",
+            "at System.Buffers.ArrayPoolEventSource.BufferAllocated(Int32 bufferId, Int32 bufferSize, Int32 poolId, Int32 bucketId, BufferAllocatedReason reason)",
+            "at System.Buffers.SharedArrayPool`1.Rent(Int32 minimumLength)",
+            "at System.Text.Json.Utf8JsonWriter.WriteStringEscapeValue(ReadOnlySpan`1 utf8Value, Int32 firstEscapeIndexVal)",
+            "at System.Text.Json.JsonDocument.WriteComplexElement(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.JsonDocument.WriteElementTo(Int32 index, Utf8JsonWriter writer)",
+            "at System.Text.Json.Nodes.JsonArray.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.Nodes.JsonObject.WriteTo(Utf8JsonWriter writer, JsonSerializerOptions options)",
+            "at System.Text.Json.JsonSerializer.ReadFromNode[TValue](JsonNode node, JsonTypeInfo`1 jsonTypeInfo)",
+            "at ModelContextProtocol.McpSession.SendRequestAsync[TParameters,TResult](String method, TParameters parameters, JsonTypeInfo`1 parametersTypeInfo, JsonTypeInfo`1 resultTypeInfo, RequestId requestId, CancellationToken cancellationToken):line 76",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.ExecutionContextCallback(Object s)",
+            "at System.Threading.ExecutionContext.RunInternal(ExecutionContext executionContext, ContextCallback callback, Object state)",
+            "at System.Runtime.CompilerServices.AsyncTaskMethodBuilder`1.AsyncStateMachineBox`1.MoveNext(Thread threadPoolThread)"
+          ]
+        }
+      ]
+    }
+  ],
+  "postCollectionDiagnostics": [
+    {
+      "name": "fork-retained-final-stream",
+      "requests": 100,
+      "concurrency": 10,
+      "serverBefore": 31574240,
+      "serverAfter": 2799376,
+      "clientBefore": 289917808,
+      "clientAfter": 27622744
+    },
+    {
+      "name": "fork-retained-upstream-single",
+      "requests": 1,
+      "concurrency": 1,
+      "serverBefore": 324642872,
+      "serverAfter": 280419848,
+      "clientBefore": 197451648,
+      "clientAfter": 178145080
+    },
+    {
+      "name": "fork-retained-final-string",
+      "requests": 100,
+      "concurrency": 10,
+      "serverBefore": 256185192,
+      "serverAfter": 6809608,
+      "clientBefore": 321435728,
+      "clientAfter": 28339400
+    }
+  ]
+}

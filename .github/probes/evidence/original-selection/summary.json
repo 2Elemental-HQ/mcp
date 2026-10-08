@@ -1,0 +1,430 @@
+{
+  "test": "ModelContextProtocol.AspNetCore.Tests.OAuth.AuthTests.AuthorizationFlow_ConcurrentStepUps_ReuseSteppedUpToken_WhenChallengeAddsNoNewScope",
+  "platform": "Linux-6.17.0-1022-azure-x86_64-with-glibc2.39",
+  "refs": {
+    "candidate": "c04230cd11f8e73986c426da8c7c4e043348d371",
+    "upstream": "3338e88e15c42cfc27465143c140d7d10f1a2707"
+  },
+  "rows": [
+    {
+      "source": "candidate",
+      "framework": "net9.0",
+      "phase": "original",
+      "delayMilliseconds": 0,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 16.655298261
+    },
+    {
+      "source": "candidate",
+      "framework": "net10.0",
+      "phase": "original",
+      "delayMilliseconds": 0,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 5.027760227000002
+    },
+    {
+      "source": "candidate",
+      "framework": "net9.0",
+      "phase": "below-probe",
+      "delayMilliseconds": 1000,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 4.776818203999994
+    },
+    {
+      "source": "candidate",
+      "framework": "net9.0",
+      "phase": "below-probe",
+      "delayMilliseconds": 1000,
+      "legacyProtocol": false,
+      "repeat": 1,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 4.7798456840000085
+    },
+    {
+      "source": "candidate",
+      "framework": "net9.0",
+      "phase": "above-probe",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 1,
+      "results": [
+        "Failed"
+      ],
+      "expectedDuplicateAuthorizationFailure": true,
+      "matched": true,
+      "seconds": 8.640041523000008
+    },
+    {
+      "source": "candidate",
+      "framework": "net9.0",
+      "phase": "above-probe",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": false,
+      "repeat": 1,
+      "exitCode": 1,
+      "results": [
+        "Failed"
+      ],
+      "expectedDuplicateAuthorizationFailure": true,
+      "matched": true,
+      "seconds": 8.286065758999996
+    },
+    {
+      "source": "candidate",
+      "framework": "net9.0",
+      "phase": "legacy-control",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": true,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 10.043921907999987
+    },
+    {
+      "source": "candidate",
+      "framework": "net9.0",
+      "phase": "legacy-control",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": true,
+      "repeat": 1,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 10.195973318
+    },
+    {
+      "source": "candidate",
+      "framework": "net10.0",
+      "phase": "below-probe",
+      "delayMilliseconds": 1000,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 4.527321666000006
+    },
+    {
+      "source": "candidate",
+      "framework": "net10.0",
+      "phase": "below-probe",
+      "delayMilliseconds": 1000,
+      "legacyProtocol": false,
+      "repeat": 1,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 4.476335094999996
+    },
+    {
+      "source": "candidate",
+      "framework": "net10.0",
+      "phase": "above-probe",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 1,
+      "results": [
+        "Failed"
+      ],
+      "expectedDuplicateAuthorizationFailure": true,
+      "matched": true,
+      "seconds": 8.388006956999988
+    },
+    {
+      "source": "candidate",
+      "framework": "net10.0",
+      "phase": "above-probe",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": false,
+      "repeat": 1,
+      "exitCode": 1,
+      "results": [
+        "Failed"
+      ],
+      "expectedDuplicateAuthorizationFailure": true,
+      "matched": true,
+      "seconds": 8.193283825999998
+    },
+    {
+      "source": "candidate",
+      "framework": "net10.0",
+      "phase": "legacy-control",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": true,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 10.24591110199998
+    },
+    {
+      "source": "candidate",
+      "framework": "net10.0",
+      "phase": "legacy-control",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": true,
+      "repeat": 1,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 10.08786499300001
+    },
+    {
+      "source": "upstream",
+      "framework": "net9.0",
+      "phase": "original",
+      "delayMilliseconds": 0,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 3.774854043000005
+    },
+    {
+      "source": "upstream",
+      "framework": "net10.0",
+      "phase": "original",
+      "delayMilliseconds": 0,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 3.7242314009999973
+    },
+    {
+      "source": "upstream",
+      "framework": "net9.0",
+      "phase": "below-probe",
+      "delayMilliseconds": 1000,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 4.577195164999978
+    },
+    {
+      "source": "upstream",
+      "framework": "net9.0",
+      "phase": "below-probe",
+      "delayMilliseconds": 1000,
+      "legacyProtocol": false,
+      "repeat": 1,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 4.576529371999982
+    },
+    {
+      "source": "upstream",
+      "framework": "net9.0",
+      "phase": "above-probe",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 1,
+      "results": [
+        "Failed"
+      ],
+      "expectedDuplicateAuthorizationFailure": true,
+      "matched": true,
+      "seconds": 8.234032628000023
+    },
+    {
+      "source": "upstream",
+      "framework": "net9.0",
+      "phase": "above-probe",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": false,
+      "repeat": 1,
+      "exitCode": 1,
+      "results": [
+        "Failed"
+      ],
+      "expectedDuplicateAuthorizationFailure": true,
+      "matched": true,
+      "seconds": 8.289587746999985
+    },
+    {
+      "source": "upstream",
+      "framework": "net9.0",
+      "phase": "legacy-control",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": true,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 10.189650663999998
+    },
+    {
+      "source": "upstream",
+      "framework": "net9.0",
+      "phase": "legacy-control",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": true,
+      "repeat": 1,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 10.187200141999995
+    },
+    {
+      "source": "upstream",
+      "framework": "net10.0",
+      "phase": "below-probe",
+      "delayMilliseconds": 1000,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 4.677065883000012
+    },
+    {
+      "source": "upstream",
+      "framework": "net10.0",
+      "phase": "below-probe",
+      "delayMilliseconds": 1000,
+      "legacyProtocol": false,
+      "repeat": 1,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 4.5281272910000325
+    },
+    {
+      "source": "upstream",
+      "framework": "net10.0",
+      "phase": "above-probe",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": false,
+      "repeat": 0,
+      "exitCode": 1,
+      "results": [
+        "Failed"
+      ],
+      "expectedDuplicateAuthorizationFailure": true,
+      "matched": true,
+      "seconds": 8.383622172000003
+    },
+    {
+      "source": "upstream",
+      "framework": "net10.0",
+      "phase": "above-probe",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": false,
+      "repeat": 1,
+      "exitCode": 1,
+      "results": [
+        "Failed"
+      ],
+      "expectedDuplicateAuthorizationFailure": true,
+      "matched": true,
+      "seconds": 8.387281054000027
+    },
+    {
+      "source": "upstream",
+      "framework": "net10.0",
+      "phase": "legacy-control",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": true,
+      "repeat": 0,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 9.893011745000024
+    },
+    {
+      "source": "upstream",
+      "framework": "net10.0",
+      "phase": "legacy-control",
+      "delayMilliseconds": 6500,
+      "legacyProtocol": true,
+      "repeat": 1,
+      "exitCode": 0,
+      "results": [
+        "Passed"
+      ],
+      "expectedDuplicateAuthorizationFailure": false,
+      "matched": true,
+      "seconds": 9.987109070999963
+    }
+  ]
+}

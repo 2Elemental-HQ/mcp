@@ -35,6 +35,7 @@ jobs:
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
 
     steps:
     - name: 📥 Clone the repo
@@ -60,6 +61,11 @@ jobs:
     - name: 🏗️ Build
       run: make build CONFIGURATION=${{ matrix.configuration }}
 
+    - name: Diagnose upstream .NET Framework SSE fixture
+      if: runner.os == 'Windows' && matrix.configuration == 'Release'
+      timeout-minutes: 10
+      run: python docs/experiments/bounded-streaming/probe-upstream-sse.py --configuration Release
+
     - name: 🧪 Test
       run: make test CONFIGURATION=${{ matrix.configuration }}
 
@@ -80,9 +86,9 @@ jobs:
       with:
         name: testresults-${{ matrix.os }}-${{ matrix.configuration }}
         path: artifacts/testresults/**
+        retention-days: 7
 
   publish-coverage:
     if: github.actor != 'dependabot[bot]'
     needs: build
     uses: ./.github/workflows/ci-code-coverage.yml
-    secrets: inherit

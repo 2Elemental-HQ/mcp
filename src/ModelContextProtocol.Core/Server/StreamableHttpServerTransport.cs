@@ -239,8 +239,8 @@ public sealed partial class StreamableHttpServerTransport : ITransport
         Throw.IfNull(message);
         Throw.IfNull(responseStream);
 
-        var postTransport = new StreamableHttpPostTransport(this, responseStream, _transportDisposedCts.Token, _logger, onResponseStarting);
         using var postCts = CancellationTokenSource.CreateLinkedTokenSource(_transportDisposedCts.Token, cancellationToken);
+        var postTransport = new StreamableHttpPostTransport(this, responseStream, _transportDisposedCts.Token, _logger, onResponseStarting, postCts.Token);
         await using (postTransport.ConfigureAwait(false))
         {
             return await postTransport.HandlePostAsync(

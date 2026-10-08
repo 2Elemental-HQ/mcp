@@ -1,0 +1,12 @@
+{
+  "source": "c04230cd11f8e73986c426da8c7c4e043348d371",
+  "version": "2.2.0-elemental.1.gc04230cd11f8",
+  "sdk": "10.0.301",
+  "upstreamBase": "3338e88e15c42cfc27465143c140d7d10f1a2707",
+  "symbols": "none; upstream logging-generator document order is not deterministic",
+  "packages": {
+    "ModelContextProtocol.2.2.0-elemental.1.gc04230cd11f8.nupkg": "019adb05495d2a2364c5d18e20155e94ca63edfe9c53ac76e0e4cff513f0a9fd",
+    "ModelContextProtocol.AspNetCore.2.2.0-elemental.1.gc04230cd11f8.nupkg": "fefc2d62334e14292973b3e8946009be45eac39057cbcc6a1001f7c29fa08b25",
+    "ModelContextProtocol.Core.2.2.0-elemental.1.gc04230cd11f8.nupkg": "b879dbce730dddd44c881096bfa25d18c3511c18fa0b5ede6c18e36181099a23"
+  }
+}

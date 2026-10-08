@@ -74,7 +74,7 @@ public abstract partial class McpSession : IAsyncDisposable
         };
 
         JsonRpcResponse response = await SendRequestAsync(jsonRpcRequest, cancellationToken).ConfigureAwait(false);
-        return JsonSerializer.Deserialize(response.Result, resultTypeInfo) ?? throw new JsonException("Unexpected JSON result in response.");
+        return response.DeserializeResult(resultTypeInfo) ?? throw new JsonException("Unexpected JSON result in response.");
     }
 
     /// <summary>

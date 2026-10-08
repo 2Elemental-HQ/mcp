@@ -1,0 +1,8 @@
+Test run for /tmp/oauth-candidate-2c5tfhh3/artifacts/bin/ModelContextProtocol.AspNetCore.Tests/Release/net9.0/ModelContextProtocol.AspNetCore.Tests.dll (.NETCoreApp,Version=v9.0)
+VSTest version 18.0.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+Results File: /home/runner/work/_temp/oauth-evidence/candidate-net9.0-below-probe-1/result.trx
+
+Passed!  - Failed:     0, Passed:     1, Skipped:     0, Total:     1, Duration: 2 s - ModelContextProtocol.AspNetCore.Tests.dll (net9.0)

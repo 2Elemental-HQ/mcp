@@ -1,0 +1,8 @@
+Test run for /tmp/oauth-upstream-009b2mpx/artifacts/bin/ModelContextProtocol.AspNetCore.Tests/Release/net10.0/ModelContextProtocol.AspNetCore.Tests.dll (.NETCoreApp,Version=v10.0)
+VSTest version 18.0.2 (x64)
+
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+Results File: /home/runner/work/_temp/oauth-evidence/upstream-net10.0-legacy-control-1/result.trx
+
+Passed!  - Failed:     0, Passed:     1, Skipped:     0, Total:     1, Duration: 7 s - ModelContextProtocol.AspNetCore.Tests.dll (net10.0)

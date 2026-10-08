@@ -1,0 +1,72 @@
+using Microsoft.Extensions.DependencyInjection;
+using ModelContextProtocol.Client;
+using ModelContextProtocol.Server;
+using ModelContextProtocol.Protocol;
+using ModelContextProtocol.Tests.Utils;
+using System.IO.Pipelines;
+
+namespace ModelContextProtocol.Tests;
+
+/// <summary>
+/// Reproduces a discovery reply arriving after the unchanged default probe deadline.
+/// </summary>
+public sealed class DelayedDiscoveryResponseProbeTests
+{
+    /// <summary>
+    /// An already-running SDK server should remain connectable when its first reply is delayed.
+    /// </summary>
+    [Theory]
+    [InlineData(0)]
+    [InlineData(6)]
+    public async Task DelayedDiscoveryShouldConnect(int seconds)
+    {
+        var requests = new Pipe();
+        var responses = new Pipe();
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddMcpServer().WithStreamServerTransport(requests.Reader.AsStream(), responses.Writer.AsStream());
+        await using var provider = services.BuildServiceProvider();
+        var server = provider.GetRequiredService<McpServer>();
+        using var cancellation = CancellationTokenSource.CreateLinkedTokenSource(TestContext.Current.CancellationToken);
+        var running = server.RunAsync(cancellation.Token);
+        try
+        {
+            using var delayed = new DelayedReadStream(responses.Reader.AsStream(), seconds);
+            await using var client = await McpClient.CreateAsync(new StreamClientTransport(requests.Writer.AsStream(), delayed), cancellationToken: cancellation.Token);
+            Assert.NotNull(client.ServerInfo);
+        }
+        finally
+        {
+            cancellation.Cancel();
+            await running;
+        }
+    }
+
+    /// <summary>
+    /// Delays delivery after the server has completed its first protocol response.
+    /// </summary>
+    private sealed class DelayedReadStream(Stream inner, int seconds) : Stream
+    {
+        private bool _first = true;
+        public override bool CanRead => true;
+        public override bool CanSeek => false;
+        public override bool CanWrite => false;
+        public override long Length => throw new NotSupportedException();
+        public override long Position { get => throw new NotSupportedException(); set => throw new NotSupportedException(); }
+        public override void Flush() => throw new NotSupportedException();
+        public override int Read(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+        public override long Seek(long offset, SeekOrigin origin) => throw new NotSupportedException();
+        public override void SetLength(long value) => throw new NotSupportedException();
+        public override void Write(byte[] buffer, int offset, int count) => throw new NotSupportedException();
+        public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+        {
+            var read = await inner.ReadAsync(buffer, cancellationToken);
+            if (_first)
+            {
+                _first = false;
+                await Task.Delay(TimeSpan.FromSeconds(seconds), cancellationToken);
+            }
+            return read;
+        }
+    }
+}

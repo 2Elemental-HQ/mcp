@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <McpSourceRoot Condition="'$(McpSourceRoot)' == ''">../../../..</McpSourceRoot>
+    <DefineConstants Condition="'$(StreamingApi)' == 'true'">$(DefineConstants);STREAMING_API</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="$(McpSourceRoot)/src/ModelContextProtocol.AspNetCore/ModelContextProtocol.AspNetCore.csproj" />
+  </ItemGroup>
+</Project>
