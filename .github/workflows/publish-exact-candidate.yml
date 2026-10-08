@@ -1,0 +1,71 @@
+name: Publish exact accepted SDK candidate
+
+on:
+  push:
+    branches: [feature/publish-exact-sdk-candidate]
+    paths:
+      - .github/workflows/publish-exact-candidate.yml
+      - .github/scripts/publish-exact-candidate.py
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish-exact-sdk-c04230cd11f8
+  cancel-in-progress: false
+
+jobs:
+  reproduce:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          dotnet-version: 10.0.301
+      - name: Reproduce the archived source with original branch metadata
+        run: |
+          git clone --no-checkout https://github.com/2Elemental-HQ/mcp.git "$RUNNER_TEMP/candidate-source"
+          cd "$RUNNER_TEMP/candidate-source"
+          git checkout -b codex/bounded-streaming-content archive/sdk-package-2.2.0-elemental.1.gc04230cd11f8
+          test "$(git rev-parse HEAD)" = c04230cd11f8e73986c426da8c7c4e043348d371
+          printf '%s\n' '{"sdk":{"version":"10.0.301","rollForward":"disable"}}' > global.json
+          export NUGET_PACKAGES="$RUNNER_TEMP/candidate-nuget"
+          export NUGET_HTTP_CACHE_PATH="$RUNNER_TEMP/candidate-http"
+          export NUGET_PLUGINS_CACHE_PATH="$RUNNER_TEMP/candidate-plugins"
+          python3 docs/experiments/bounded-streaming/build-candidate.py --output "$RUNNER_TEMP/exact-packages"
+      - name: Verify every complete archive before publication
+        run: python3 .github/scripts/publish-exact-candidate.py --verify "$RUNNER_TEMP/exact-packages"
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        with:
+          name: exact-candidate
+          path: |
+            ${{ runner.temp }}/exact-packages/*.nupkg
+            ${{ runner.temp }}/exact-packages/manifest.json
+            ${{ runner.temp }}/exact-packages/*.build.log
+          retention-days: 7
+
+  publish:
+    needs: reproduce
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
+        with:
+          dotnet-version: 10.0.301
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c
+        with:
+          name: exact-candidate
+          path: exact-packages
+      - name: Verify remote collisions and publish only missing exact archives in dependency order
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 .github/scripts/publish-exact-candidate.py --publish exact-packages
